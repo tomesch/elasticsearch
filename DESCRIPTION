@@ -1,9 +1,9 @@
 Package: relastic
 Type: Package
-Title: What the package does (short line)
-Version: 1.0
+Title: Simple R Elasticsearch client
+Version: 0.0
 Date: 2014-10-20
-Author: Who wrote it
+Author: Thomas Eschemann, Joris Girardot, Anne Mayer, Claudia Tanase 
 Maintainer: Thomas Eschemann <thomas@eschemann.fr>
 Description: More about what it does (maybe more than one line)
 URL: https://github.com/Tomesch/relastic

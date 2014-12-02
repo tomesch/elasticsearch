@@ -1,27 +1,47 @@
 #' @export
-search <- function (index = "_all", type = "_all", query = NULL, from = NULL, size = NULL, fields = NULL, raw = FALSE) {
-  if (!is.null(query)) {
+search <- function (index, type, query, from = 0, size = 10, fields, source, raw = FALSE) {
+  req_url = getOption("relastic_url")
+  
+  # Format request url
+  if (missing(index) && missing(type)) {
+    req_url = paste(req_url, "_search", sep="/")
+  }
+  else if (missing(index)) {
+    req_url = paste(req_url, "_all", paste(type, collapse = ","), "_search", sep="/")
+  }
+  else if (missing(type)) {
+    req_url = paste(req_url, paste(index, collapse = ","), "_search", sep="/")
+  }
+  else {
+    req_url = paste(req_url, paste(index, collapse = ","), paste(type, collapse = ","), "_search", sep="/")
+  }
+  
+  # Format request body 
+  body = list("from" = jsonlite::unbox(from), "size" = jsonlite::unbox(size))
+  
+  if (!missing(query)) {
     if (is.list(query)) {
-      body = list("query" = query, "from" = from, "size" = size, "fields" = fields)
+      body = c(body, list("query" = query))
     }
-    else if (is.character(query) && jsonlite::validate(query)[1]) {
-      query_parsed = jsonlite::fromJSON(query)
-      #body = list("query" = query_parsed, "from" = from, "size" = size, "fields" = fields)
-      body = list("query" = query_parsed)
+    if (is.character(query) && jsonlite::validate(query)[1]) {
+      body = c(body, list("query" = jsonlite::fromJSON(query)))
     }
   }
-  else{
-    body = list("from" = from, "size" = size, "fields" = fields)
+  
+  if (!missing(fields)) {
+    body = c(body, list("fields" = c(fields)))
   }
   
-  body_json = jsonlite::toJSON(body, auto_unbox = TRUE)
+  if (!missing(source)) {
+    body = c(body, list("source" = source))
+  }
   
-  base_url = getOption("relastic_url")
-  req_url = paste(base_url, index, type, "_search", sep="/")
-  
-  res = httr::GET(req_url, body=body_json)
+  # Send HTTP request
+  body_json = jsonlite::toJSON(body)
+  res = httr::POST(req_url, body = body_json)
   httr::stop_for_status(res)
-
+  
+  # Return the result
   if (raw) {
     httr::content(res, as="text")
   }

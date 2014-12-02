@@ -1,8 +1,8 @@
 #' @export
-search <- function (index, type, query, from = 0, size = 10, fields, source, raw = FALSE) {
+search <- function (index, type, query, from = 0, size = 10, fields, source, default_operator="OR", explain=FALSE, raw = FALSE) {
   req_url = getOption("relastic_url")
   
-  # Format request url
+  # Format base request url
   if (missing(index) && missing(type)) {
     req_url = paste(req_url, "_search", sep="/")
   }
@@ -16,13 +16,14 @@ search <- function (index, type, query, from = 0, size = 10, fields, source, raw
     req_url = paste(req_url, paste(index, collapse = ","), paste(type, collapse = ","), "_search", sep="/")
   }
   
+  # Add uri parameters
+  req_url = paste0(req_url, "?default_operator=", default_operator)
+  req_url = paste0(req_url, "&explain=", explain)
+  
   # Format request body 
   body = list("from" = jsonlite::unbox(from), "size" = jsonlite::unbox(size))
   
   if (!missing(query)) {
-    if (is.list(query)) {
-      body = c(body, list("query" = query))
-    }
     if (is.character(query) && jsonlite::validate(query)[1]) {
       body = c(body, list("query" = jsonlite::fromJSON(query)))
     }
@@ -31,14 +32,20 @@ search <- function (index, type, query, from = 0, size = 10, fields, source, raw
   if (!missing(fields)) {
     body = c(body, list("fields" = c(fields)))
   }
-  
+    
   if (!missing(source)) {
-    body = c(body, list("source" = source))
+    if (is.logical(source) || is.character(source)) {
+      body = c(body, list("_source" = jsonlite::unbox(source)))
+    }
+    else if (is.vector(source)) {
+      body = c(body, list("_source" = source))
+    }
   }
   
   # Send HTTP request
   body_json = jsonlite::toJSON(body)
   res = httr::POST(req_url, body = body_json)
+  print(req_url)
   httr::stop_for_status(res)
   
   # Return the result
@@ -46,6 +53,6 @@ search <- function (index, type, query, from = 0, size = 10, fields, source, raw
     httr::content(res, as="text")
   }
   else {
-    httr::content(res, as="parsed")
+    jsonlite::fromJSON(httr::content(res, as="text"))
   }
 }

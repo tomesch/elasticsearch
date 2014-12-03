@@ -15,34 +15,27 @@
 #' \url{http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-index_.html}
 #'
 #' @export
-index <- function (index, type, id, document, routing = NULL, raw = FALSE) {
+index <- function (index, type, id, document, routing = NULL, ttl = NULL, refresh = FALSE, timeout = "1m", raw = FALSE) {
   if (missing(index) || missing(type) || missing(document)) {
     stop()
   }
   else {
-    base_url = getOption("relastic_url")
-    req_url = paste(base_url, index, type, sep="/")
+    url = getOption("res_url")
+    path = paste(index, type, sep="/")
     if (!missing(id)) {      
-      req_url = paste(req_url, id, sep="/")
+      path = paste(path, id, sep="/")
     }
-    if (!missing(routing)) {
-      req_url = paste0(req_url, "?routing=", routing)
-    }
-    print(req_url)
-    
+    args = list(routing = routing, ttl = ttl, refresh = refresh, timeout = timeout)
+    url = httr::modify_url(url, "path" = path, "query" = args)
+        
     if (!missing(id)) { 
-      res = httr::PUT(req_url, body=document)
+      res = httr::PUT(url, body=document)
     }
     else {
-      res = httr::POST(req_url, body=document)
+      res = httr::POST(url, body=document)
     }
     httr::stop_for_status(res)
     
-    if (raw) {
-      httr::content(res, as="text")
-    }
-    else {
-      jsonlite::fromJSON(httr::content(res, as="text"))
-    }
+    format_res(res, raw)
   }
 }

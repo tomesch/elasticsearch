@@ -1,3 +1,8 @@
-mergeUrlArgs <- function (x) {
-  sapply(unique(names(x)), function(z) unlist(x[names(x) == z], use.names=FALSE), simplify=FALSE)
+format_res <- function (res, raw) {
+  if (raw) {
+    httr::content(res, as="text")
+  }
+  else {
+    jsonlite::fromJSON(httr::content(res, as="text"))
+  }
 }

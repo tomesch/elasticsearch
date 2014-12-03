@@ -1,13 +1,14 @@
 #' @export
-connect <- function (host="http://127.0.0.1", port=9200) {
-  base_url = paste(host, port, sep=":")
-  res <- httr::GET(base_url)
-  httr::stop_for_status(res)
-  print(httr::content(res, as="parsed"))
+connect <- function (protocol = "http", hostname = "127.0.0.1", path = NULL, port = 9200, raw = FALSE) {
+  url = structure(list("scheme" = protocol, "hostname" = hostname, "port" = port, "path" = path), class="url")
   
-  configure(base_url)
+  res <- httr::GET(url)
+  httr::stop_for_status(res)
+  configure(url)
+  
+  format_res(res, raw)
 }
 
 configure <- function (url) {
-  options(relastic_url = url)
+  options(res_url = url)
 }

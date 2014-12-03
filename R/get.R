@@ -18,24 +18,22 @@
 #' \url{http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-get.html}
 #' 
 #' @export
-get <- function (index, type="_all", id, fields=NULL, raw=FALSE) {
+get <- function (index, type = "_all", id, fields = NULL, realtime = TRUE, routing = NULL, preference = NULL, refresh = FALSE, version = NULL, raw = FALSE) {
   if (exists("index") && exists("id")) {
-    base_url = getOption("relastic_url")
-    req_url = paste(base_url, index, type, id, sep="/")
+    url = getOption("res_url")
     
-    if (is.vector(fields)) {
-      fields_str = paste(fields, collapse=",")
-      req_url = paste(req_url, "?fields=", fields_str, sep="")
+    path = paste(index, type, id, sep = "/")
+    
+    if (!is.null(fields)) {
+      fields = paste(fields, collapse = ",")
     }
+    args = list(fields = fields, realtime = realtime, routing = routing, preference = preference, refresh = refresh, version = version)
     
-    res <- httr::GET(req_url)
+    url = httr::modify_url(url, "path" = path, "query" = args)
+    
+    res <- httr::GET(url)
     httr::stop_for_status(res)
     
-    if (raw) {
-      httr::content(res, as="text")
-    }
-    else {
-      httr::content(res, as="parsed")
-    }
+    format_res(res, raw)
   }
 }

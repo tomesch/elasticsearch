@@ -13,16 +13,21 @@
 #' \url{http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-delete.html}
 #' 
 #' @export
-delete <- function (index, type, id) {
+delete <- function (index, type, id, version = NULL, routing = NULL, parent = NULL, refresh = FALSE, timeout = "1m", raw = FALSE) {
   if (missing(index) || missing(type) || missing(id)) {
     stop()
   }
   else {
-    base_url = getOption("relastic_url")
-    req_url = paste(base_url, index, type, id, sep="/")
+    url = getOption("res_url")
+
+    path = paste(index, type, id, sep="/")
+    args = list(version = version, routing = routing, parent = parent, refresh = refresh, timeout = timeout)
     
-    res <- DELETE(req_url)
-    stop_for_status(res)
-    content(res, as="parsed")
+    url = httr::modify_url(url, "path" = path, "query" = args)
+    
+    res <- httr::DELETE(url)    
+    httr::stop_for_status(res)
+    
+    format_res(res, raw)
   }
 }

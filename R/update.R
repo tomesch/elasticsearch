@@ -14,16 +14,25 @@
 #' \url{http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-update.html}
 #' 
 #' @export
-update <- function (index, type, id, script) {
+update <- function (index, type, id, body, routing = NULL, parent = NULL, timeout = "1m", refresh = FALSE, fields = NULL, version = NULL) {
   if (missing(index) || missing(type) || missing(id) || missing(script)) {
     stop()
   }
   else {
-    base_url = getOption("relastic_url")
-    req_url = paste(base_url, index, type, id, "_update", sep="/")
+    url = getOption("url")
     
-    res <- httr::POST(req_url, body=script, content_type_json())
+    path = paste(index, type, id, "_update", sep="/")
+    
+    if (!is.null(fields)) {
+      fields = paste(fields, collapse = ",")
+    }
+    args = list(routing = routing, parent = parent, timeout = timeout, refresh = refresh, fields = fields, version = version)
+    
+    url = httr::modify_url(url, "path" = path, "query" = args)
+    
+    res <- httr::POST(url, body=script, content_type_json())
     stop_for_status(res)
-    content(res, as="parsed")
+    
+    format_res(res, raw)
   }
 }

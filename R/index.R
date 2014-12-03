@@ -29,10 +29,10 @@ index <- function (index, type, id, document, version = NULL, version_type = NUL
     url = httr::modify_url(url, "path" = path, "query" = args)
     
     if (!missing(id)) {
-      res = httr::PUT(url, body=document)
+      res = httr::PUT(url, body=document, encode = "json")
     }
     else {
-      res = httr::POST(url, body=document)
+      res = httr::POST(url, body=document, encode = "json")
     }
     httr::stop_for_status(res)
     

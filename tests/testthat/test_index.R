@@ -1,5 +1,18 @@
 context("Document indexation API")
 
+test_that("the document is correctly encoded", {
+  res::connect()
+  
+  res = res::index("tests", "test1", document='{"testing": "hard", "list" : [1, 2, 3]}')
+  expect_match(res["created"], "TRUE")
+  
+  res2 = res::index("tests", "test1", document=list(testing = "hard", list = c(1, 2, 3)))
+  expect_match(res2["created"], "TRUE")
+  
+  expect_equal(res::get("tests", "test1", res["_id"])["_source"], 
+                res::get("tests", "test1", res2["_id"])["_source"])
+})
+
 test_that("ids are automaticly created", {
   res::connect()
   

@@ -15,7 +15,7 @@
 #' \url{http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-index_.html}
 #'
 #' @export
-index <- function (index, type, id, document, routing = NULL, ttl = NULL, refresh = FALSE, timeout = "1m", raw = FALSE) {
+index <- function (index, type, id, document, version = NULL, version_type = NULL, op_type = NULL, routing = NULL, timestamp = NULL, ttl = NULL, refresh = FALSE, timeout = "1m", raw = FALSE) {
   if (missing(index) || missing(type) || missing(document)) {
     stop()
   }
@@ -25,10 +25,10 @@ index <- function (index, type, id, document, routing = NULL, ttl = NULL, refres
     if (!missing(id)) {      
       path = paste(path, id, sep="/")
     }
-    args = list(routing = routing, ttl = ttl, refresh = refresh, timeout = timeout)
+    args = list(op_type = op_type, version = version, version_type = version_type, routing = routing, timestamp = timestamp, ttl = ttl, refresh = refresh, timeout = timeout)
     url = httr::modify_url(url, "path" = path, "query" = args)
-        
-    if (!missing(id)) { 
+    
+    if (!missing(id)) {
       res = httr::PUT(url, body=document)
     }
     else {

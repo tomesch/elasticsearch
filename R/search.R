@@ -1,3 +1,21 @@
+#' Execute a search query and retrieve results macking the query
+#'  
+#' \code{search} executes a search query and retrieves∆ results macking the query
+#'
+#' @param index A string representing the index under wi
+#' @param type A string representing the index under wi
+#' @param query A string representing the index under wi
+#' @param from A string representing the index under wi
+#' @param size A string representing the index under wi
+#' @param fields A string representing the index under wi
+#' 
+#' @examples
+#' search("twitter", id="1")
+#' search("twitter", "tweet", "1", 'c("name", "date")')
+#' 
+#' @references
+#' \url{http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-search.html#search-search}
+#' 
 #' @export
 search <- function (index, type, query, from = 0, size = 10, fields, source, default_operator="OR", explain=FALSE, raw = FALSE) {
   req_url = getOption("relastic_url")

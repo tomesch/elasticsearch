@@ -13,7 +13,7 @@ test_that("the connection to the ElasticSearch fails when given wrong url", {
 test_that("the result is return in the correct format", {
   res = res::connect()
   expect_is(res, "list")
-  
+
   res = res::connect(raw=TRUE)
   expect_is(res, "character")
 })

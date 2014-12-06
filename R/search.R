@@ -19,6 +19,9 @@
 #' @export
 search <- function (index, type, query, from = 0, size = 10, fields = NULL,
                     source = NULL, default_operator="OR", explain=FALSE,
+                    analyzer = NULL, timeout = NULL,
+                    search_type = "query_then_fetch",
+                    lowercase_expanded_terms = TRUE, analyze_wildcard = FALSE,
                     raw = FALSE) {
   url = getOption("res_url")
 
@@ -42,21 +45,15 @@ search <- function (index, type, query, from = 0, size = 10, fields = NULL,
   }
 
   args = list(fields = fields, "_source" = source,
-              default_operator = default_operator, explain = explain)
-
-  # Format request body
-  body = list("from" = jsonlite::unbox(from), "size" = jsonlite::unbox(size))
-
-  if (!missing(query)) {
-    if (is.character(query) && jsonlite::validate(query)[1]) {
-      body = c(body, list("query" = jsonlite::fromJSON(query)))
-    }
-  }
+              default_operator = default_operator, explain = explain,
+              analyzer = analyzer, timeout = timeout, search_type = search_type,
+              lowercase_expanded_terms = lowercase_expanded_terms,
+              analyze_wildcard = analyze_wildcard, from = from, size = size)
 
   url = httr::modify_url(url, "path" = path, "query" = args)
 
   # Send HTTP request
-  res = httr::POST(url, body = body, encode = "json")
+  res = httr::POST(url, body = query, encode = "json")
   httr::stop_for_status(res)
 
   # Return the result

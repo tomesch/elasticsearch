@@ -11,8 +11,8 @@ test_that("the document is correctly encoded", {
                     document=list(testing = "hard", list = c(1, 2, 3)))
   expect_match(res2["created"], "TRUE")
 
-  expect_equal(get("tests", "test1", res["_id"])["_source"],
-               get("tests", "test1", res2["_id"])["_source"])
+  expect_equal(Get("tests", "test1", res["_id"])["_source"],
+               Get("tests", "test1", res2["_id"])["_source"])
 })
 
 test_that("ids are automaticly created", {

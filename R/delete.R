@@ -16,7 +16,7 @@
 Delete <- function (index, type, id, query = NULL, version = NULL, routing = NULL,
                     parent = NULL, replication = "sync", refresh = FALSE,
                     timeout = "1m", consistency = NULL, raw = FALSE,
-                    validate = TRUE) {
+                    validate.params = TRUE) {
   if (!is.null(query)) {
     # delete by query API
     url = getOption("res_url")
@@ -35,7 +35,7 @@ Delete <- function (index, type, id, query = NULL, version = NULL, routing = NUL
                 refresh = refresh, timeout = timeout, replication = replication,
                 consistency = consistency)
 
-    if (validate) {
+    if (validate.params) {
       ValidateArgs(args)
     }
 

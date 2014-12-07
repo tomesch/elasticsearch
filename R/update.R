@@ -16,7 +16,7 @@
 #' @export
 Update <- function (index, type, id, body, routing = NULL, parent = NULL,
                     timeout = "1m", refresh = FALSE, fields = NULL,
-                    version = NULL, validate = TRUE) {
+                    version = NULL, validate.params = TRUE) {
   if (missing(index) || missing(type) || missing(id) || missing(script)) {
     stop()
   } else {
@@ -30,7 +30,7 @@ Update <- function (index, type, id, body, routing = NULL, parent = NULL,
     args = list(routing = routing, parent = parent, timeout = timeout,
                 refresh = refresh, fields = fields, version = version)
 
-    if (validate) {
+    if (validate.params) {
       ValidateArgs(args)
     }
 

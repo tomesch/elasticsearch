@@ -18,7 +18,7 @@
 Index <- function (index, type, id, document, version = NULL,
                    version_type = NULL, op_type = NULL, routing = NULL,
                    timestamp = NULL, ttl = NULL, refresh = FALSE,
-                   timeout = "1m", raw = FALSE, validate = TRUE) {
+                   timeout = "1m", raw = FALSE, validate.params = TRUE) {
   if (missing(index) || missing(type) || missing(document)) {
     stop()
   } else {
@@ -32,7 +32,7 @@ Index <- function (index, type, id, document, version = NULL,
                 timestamp = timestamp, ttl = ttl, refresh = refresh,
                 timeout = timeout)
 
-    if (validate) {
+    if (validate.params) {
       ValidateArgs(args)
     }
 

@@ -20,7 +20,7 @@
 #' @export
 Get <- function (index, type = "_all", id, fields = NULL, realtime = TRUE,
                  routing = NULL, preference = NULL, refresh = FALSE,
-                 version = NULL, raw = FALSE, validate = TRUE) {
+                 version = NULL, raw = FALSE, validate.params = TRUE) {
   if (missing(index) || missing(id)) {
     stop()
   }
@@ -34,7 +34,7 @@ Get <- function (index, type = "_all", id, fields = NULL, realtime = TRUE,
   args = list(fields = fields, realtime = realtime, routing = routing,
               preference = preference, refresh = refresh, version = version)
 
-  if (validate) {
+  if (validate.params) {
     ValidateArgs(args)
   }
 

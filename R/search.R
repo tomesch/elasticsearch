@@ -22,7 +22,7 @@ Search <- function (index, type, query, from = 0, size = 10, fields = NULL,
                     analyzer = NULL, timeout = NULL,
                     search_type = "query_then_fetch",
                     lowercase_expanded_terms = TRUE, analyze_wildcard = FALSE,
-                    raw = FALSE, validate = TRUE) {
+                    validate = FALSE, raw = FALSE, validate.params = TRUE) {
   url = getOption("res_url")
 
   # Format path
@@ -47,7 +47,7 @@ Search <- function (index, type, query, from = 0, size = 10, fields = NULL,
               lowercase_expanded_terms = lowercase_expanded_terms,
               analyze_wildcard = analyze_wildcard, from = from, size = size)
 
-  if (validate) {
+  if (validate.params) {
     ValidateArgs(args)
   }
 

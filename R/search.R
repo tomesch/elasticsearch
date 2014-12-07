@@ -22,7 +22,7 @@ search <- function (index, type, query, from = 0, size = 10, fields = NULL,
                     analyzer = NULL, timeout = NULL,
                     search_type = "query_then_fetch",
                     lowercase_expanded_terms = TRUE, analyze_wildcard = FALSE,
-                    raw = FALSE) {
+                    raw = FALSE, validate = TRUE) {
   url = getOption("res_url")
 
   # Format path
@@ -50,7 +50,7 @@ search <- function (index, type, query, from = 0, size = 10, fields = NULL,
               lowercase_expanded_terms = lowercase_expanded_terms,
               analyze_wildcard = analyze_wildcard, from = from, size = size)
 
-  validate_args(args)
+  if (validate) validate_args(args)
 
   url = httr::modify_url(url, "path" = path, "query" = args)
 

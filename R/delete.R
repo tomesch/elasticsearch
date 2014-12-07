@@ -15,7 +15,8 @@
 #' @export
 delete <- function (index, type, id, version = NULL, routing = NULL,
                     parent = NULL, replication = "sync", refresh = FALSE,
-                    timeout = "1m", consistency = NULL, raw = FALSE) {
+                    timeout = "1m", consistency = NULL, raw = FALSE,
+                    validate = TRUE) {
   if (missing(index) || missing(type) || missing(id)) {
     stop()
   }
@@ -27,7 +28,7 @@ delete <- function (index, type, id, version = NULL, routing = NULL,
                 refresh = refresh, timeout = timeout, replication = replication,
                 consistency = consistency)
 
-    validate_args(args)
+    if (validate) validate_args(args)
 
     url = httr::modify_url(url, "path" = path, "query" = args)
 

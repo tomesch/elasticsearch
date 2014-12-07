@@ -20,7 +20,7 @@
 #' @export
 get <- function (index, type = "_all", id, fields = NULL, realtime = TRUE,
                  routing = NULL, preference = NULL, refresh = FALSE,
-                 version = NULL, raw = FALSE) {
+                 version = NULL, raw = FALSE, validate = TRUE) {
   if (exists("index") && exists("id")) {
     url = getOption("res_url")
 
@@ -32,7 +32,7 @@ get <- function (index, type = "_all", id, fields = NULL, realtime = TRUE,
     args = list(fields = fields, realtime = realtime, routing = routing,
                 preference = preference, refresh = refresh, version = version)
 
-    validate_args(args)
+    if (validate) validate_args(args)
 
     url = httr::modify_url(url, "path" = path, "query" = args)
 

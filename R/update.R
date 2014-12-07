@@ -16,7 +16,7 @@
 #' @export
 update <- function (index, type, id, body, routing = NULL, parent = NULL,
                     timeout = "1m", refresh = FALSE, fields = NULL,
-                    version = NULL) {
+                    version = NULL, validate = TRUE) {
   if (missing(index) || missing(type) || missing(id) || missing(script)) {
     stop()
   }
@@ -31,7 +31,7 @@ update <- function (index, type, id, body, routing = NULL, parent = NULL,
     args = list(routing = routing, parent = parent, timeout = timeout,
                 refresh = refresh, fields = fields, version = version)
 
-    validate_args(args)
+    if (validate) validate_args(args)
 
     url = httr::modify_url(url, "path" = path, "query" = args)
 

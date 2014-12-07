@@ -18,7 +18,7 @@
 index <- function (index, type, id, document, version = NULL,
                    version_type = NULL, op_type = NULL, routing = NULL,
                    timestamp = NULL, ttl = NULL, refresh = FALSE,
-                   timeout = "1m", raw = FALSE) {
+                   timeout = "1m", raw = FALSE, validate = TRUE) {
   if (missing(index) || missing(type) || missing(document)) {
     stop()
   }
@@ -33,7 +33,7 @@ index <- function (index, type, id, document, version = NULL,
                 timestamp = timestamp, ttl = ttl, refresh = refresh,
                 timeout = timeout)
 
-    validate_args(args)
+    if (validate) validate_args(args)
 
     url = httr::modify_url(url, "path" = path, "query" = args)
 

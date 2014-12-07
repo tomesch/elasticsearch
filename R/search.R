@@ -17,7 +17,7 @@
 #' \url{http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-search.html#search-search}
 #'
 #' @export
-search <- function (index, type, query, from = 0, size = 10, fields = NULL,
+Search <- function (index, type, query, from = 0, size = 10, fields = NULL,
                     source = NULL, default_operator="OR", explain=FALSE,
                     analyzer = NULL, timeout = NULL,
                     search_type = "query_then_fetch",
@@ -28,14 +28,11 @@ search <- function (index, type, query, from = 0, size = 10, fields = NULL,
   # Format path
   if (missing(index) && missing(type)) {
     path = paste(path, "_search", sep="/")
-  }
-  else if (missing(index)) {
+  } else if (missing(index)) {
     path = paste(path, "_all", paste(type, collapse = ","), "_search", sep="/")
-  }
-  else if (missing(type)) {
+  } else if (missing(type)) {
     path = paste(path, paste(index, collapse = ","), "_search", sep="/")
-  }
-  else {
+  } else {
     path = paste(path, paste(index, collapse = ","),
                  paste(type, collapse = ","), "_search", sep="/")
   }
@@ -50,7 +47,9 @@ search <- function (index, type, query, from = 0, size = 10, fields = NULL,
               lowercase_expanded_terms = lowercase_expanded_terms,
               analyze_wildcard = analyze_wildcard, from = from, size = size)
 
-  if (validate) validate_args(args)
+  if (validate) {
+    ValidateArgs(args)
+  }
 
   url = httr::modify_url(url, "path" = path, "query" = args)
 
@@ -59,5 +58,5 @@ search <- function (index, type, query, from = 0, size = 10, fields = NULL,
   httr::stop_for_status(res)
 
   # Return the result
-  format_res(res, raw)
+  FormatESResult(res, raw)
 }

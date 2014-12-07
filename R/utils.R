@@ -1,13 +1,12 @@
-format_res <- function (res, raw) {
+FormatESResult <- function (res, raw) {
   if (raw) {
     httr::content(res, as="text")
-  }
-  else {
+  } else {
     jsonlite::fromJSON(httr::content(res, as="text"))
   }
 }
 
-validate_args <- function (args) {
+ValidateArgs <- function (args) {
   res = lapply(names(args), function (arg) {
     val = args[[arg]]
     if (!is.null(val)) {

@@ -15,14 +15,13 @@
 #' \url{http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-index_.html}
 #'
 #' @export
-index <- function (index, type, id, document, version = NULL,
+Index <- function (index, type, id, document, version = NULL,
                    version_type = NULL, op_type = NULL, routing = NULL,
                    timestamp = NULL, ttl = NULL, refresh = FALSE,
                    timeout = "1m", raw = FALSE, validate = TRUE) {
   if (missing(index) || missing(type) || missing(document)) {
     stop()
-  }
-  else {
+  } else {
     url = getOption("res_url")
     path = paste(index, type, sep="/")
     if (!missing(id)) {
@@ -33,18 +32,19 @@ index <- function (index, type, id, document, version = NULL,
                 timestamp = timestamp, ttl = ttl, refresh = refresh,
                 timeout = timeout)
 
-    if (validate) validate_args(args)
+    if (validate) {
+      ValidateArgs(args)
+    }
 
     url = httr::modify_url(url, "path" = path, "query" = args)
 
     if (!missing(id)) {
       res = httr::PUT(url, body=document, encode = "json")
-    }
-    else {
+    } else {
       res = httr::POST(url, body=document, encode = "json")
     }
     httr::stop_for_status(res)
 
-    format_res(res, raw)
+    FormatESResult(res, raw)
   }
 }

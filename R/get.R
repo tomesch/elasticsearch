@@ -18,7 +18,7 @@
 #' \url{http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-get.html}
 #'
 #' @export
-get <- function (index, type = "_all", id, fields = NULL, realtime = TRUE,
+Get <- function (index, type = "_all", id, fields = NULL, realtime = TRUE,
                  routing = NULL, preference = NULL, refresh = FALSE,
                  version = NULL, raw = FALSE, validate = TRUE) {
   if (missing(index) || missing(id)) {
@@ -34,12 +34,14 @@ get <- function (index, type = "_all", id, fields = NULL, realtime = TRUE,
   args = list(fields = fields, realtime = realtime, routing = routing,
               preference = preference, refresh = refresh, version = version)
 
-  if (validate) validate_args(args)
+  if (validate) {
+    ValidateArgs(args)
+  }
 
   url = httr::modify_url(url, "path" = path, "query" = args)
 
   res = httr::GET(url)
   httr::stop_for_status(res)
 
-  format_res(res, raw)
+  FormatESResult(res, raw)
 }

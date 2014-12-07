@@ -12,6 +12,9 @@ validate_args <- function (args) {
     val = args[[arg]]
     if (!is.null(val)) {
       switch(arg,
+             realtime = { # WRITE TEST
+              if (!is.logical(val)) warning(call. = FALSE)
+             },
              replication = {
                if (!(val %in% c("async", "sync"))) warning(call. = FALSE)
              },

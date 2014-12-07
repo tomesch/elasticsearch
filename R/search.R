@@ -25,7 +25,7 @@ search <- function (index, type, query, from = 0, size = 10, fields = NULL,
                     raw = FALSE) {
   url = getOption("res_url")
 
-  # Format base request url
+  # Format path
   if (missing(index) && missing(type)) {
     path = paste(path, "_search", sep="/")
   }
@@ -49,6 +49,8 @@ search <- function (index, type, query, from = 0, size = 10, fields = NULL,
               analyzer = analyzer, timeout = timeout, search_type = search_type,
               lowercase_expanded_terms = lowercase_expanded_terms,
               analyze_wildcard = analyze_wildcard, from = from, size = size)
+
+  validate_args(args)
 
   url = httr::modify_url(url, "path" = path, "query" = args)
 

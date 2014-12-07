@@ -21,24 +21,25 @@
 get <- function (index, type = "_all", id, fields = NULL, realtime = TRUE,
                  routing = NULL, preference = NULL, refresh = FALSE,
                  version = NULL, raw = FALSE, validate = TRUE) {
-  if (exists("index") && exists("id")) {
-    url = getOption("res_url")
-
-    path = paste(index, type, id, sep = "/")
-
-    if (!is.null(fields)) {
-      fields = paste(fields, collapse = ",")
-    }
-    args = list(fields = fields, realtime = realtime, routing = routing,
-                preference = preference, refresh = refresh, version = version)
-
-    if (validate) validate_args(args)
-
-    url = httr::modify_url(url, "path" = path, "query" = args)
-
-    res = httr::GET(url)
-    httr::stop_for_status(res)
-
-    format_res(res, raw)
+  if (missing(index) || missing(id)) {
+    stop()
   }
+  url = getOption("res_url")
+
+  path = paste(index, type, id, sep = "/")
+
+  if (!is.null(fields)) {
+    fields = paste(fields, collapse = ",")
+  }
+  args = list(fields = fields, realtime = realtime, routing = routing,
+              preference = preference, refresh = refresh, version = version)
+
+  if (validate) validate_args(args)
+
+  url = httr::modify_url(url, "path" = path, "query" = args)
+
+  res = httr::GET(url)
+  httr::stop_for_status(res)
+
+  format_res(res, raw)
 }

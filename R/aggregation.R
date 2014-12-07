@@ -2,9 +2,9 @@
 #'
 #' \code{aggregation} returns values extracted from the aggregated document
 #'
-#' @param index A string representing the index under wi
-#' @param type A string representing the index under wi
-#' @param aggs A string representing the index under wi
+#' @param index A string representing the index
+#' @param type A string representing the type
+#' @param aggs A string representing the json aggregation parameter
 #'
 #' @references
 #' \url{http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-aggregations-bucket-terms-aggregation.html}

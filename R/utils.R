@@ -13,35 +13,35 @@ validate_args <- function (args) {
     if (!is.null(val)) {
       switch(arg,
              realtime = { # WRITE TEST
-              if (!is.logical(val)) warning(call. = FALSE)
+              if (!is.logical(val)) warning('"', val, '" is not a valid realtime value. Should be TRUE or FALSE', call. = FALSE, immediate = TRUE)
              },
              replication = {
-               if (!(val %in% c("async", "sync"))) warning(call. = FALSE)
+               if (!(val %in% c("async", "sync"))) warning('"', val, '" is not a valid replication value. Should be "async" or "sync"', call. = FALSE, immediate = TRUE)
              },
              consistency = {
-               if (!(val %in% c("one", "quorum", "all"))) warning(call. = FALSE)
+               if (!(val %in% c("one", "quorum", "all"))) warning('"', val, '" is not a valid consistency value. Should be one of "one", "quorum" or "all"', call. = FALSE, immediate = TRUE)
              },
              refresh = {
-               if (!is.logical(val)) warning(call. = FALSE)
+               if (!is.logical(val)) warning('"', val, '" is not a valid refresh value. Should be TRUE or FALSE', call. = FALSE, immediate = TRUE)
              },
              timeout = {
-               if(!grepl("^[0-9]+[y, M, w, d, h, m, s]{0,1}$", val)) warning(call. = FALSE)
+               if(!grepl("^[0-9]+[y, M, w, d, h, m, s]{0,1}$", val)) warning('"', val, '" is not a valid timeout value. Reference: http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/common-options.html#time-units', call. = FALSE, immediate = TRUE)
              },
              version_type = {
                if (!(val %in% c("internal", "external", "external_gt",
-                                "external_gte", "force"))) warning(call. = FALSE)
+                                "external_gte", "force"))) warning('"', val, '" is not a valid version type value. Should be one of "internal", "external", "external_gt", "external_gte" or "force',call. = FALSE, immediate = TRUE)
              },
              op_type = {
-               if (!(val %in% c("create"))) warning(call. = FALSE)
+               if (!(val %in% c("create"))) warning('"', val, '" is not a valid operation type value. Should be "create"', call. = FALSE, immediate = TRUE)
              },
              timestamp = {
                #TODO
              },
              ttl = {
-               if(!grepl("^[0-9]+[y, M, w, d, h, m, s]{0,1}$", val)) warning(call. = FALSE)
+               if(!grepl("^[0-9]+[y, M, w, d, h, m, s]{0,1}$", val)) warning('"', val, '" is not a valid ttl value. Reference: http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/common-options.html#time-units', call. = FALSE, immediate = TRUE)
              },
              fields = {
-               if (!is.vector(val)) warning(call. = FALSE)
+               if (!is.vector(val)) warning(call. = FALSE, immediate = TRUE)
              })
     }
   })

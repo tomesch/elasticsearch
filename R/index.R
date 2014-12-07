@@ -32,6 +32,9 @@ index <- function (index, type, id, document, version = NULL,
                 version_type = version_type, routing = routing,
                 timestamp = timestamp, ttl = ttl, refresh = refresh,
                 timeout = timeout)
+
+    validate_args(args)
+
     url = httr::modify_url(url, "path" = path, "query" = args)
 
     if (!missing(id)) {

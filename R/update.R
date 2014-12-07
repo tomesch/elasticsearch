@@ -31,6 +31,8 @@ update <- function (index, type, id, body, routing = NULL, parent = NULL,
     args = list(routing = routing, parent = parent, timeout = timeout,
                 refresh = refresh, fields = fields, version = version)
 
+    validate_args(args)
+
     url = httr::modify_url(url, "path" = path, "query" = args)
 
     res <- httr::POST(url, body=script, content_type_json())

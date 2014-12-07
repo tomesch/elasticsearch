@@ -32,6 +32,8 @@ get <- function (index, type = "_all", id, fields = NULL, realtime = TRUE,
     args = list(fields = fields, realtime = realtime, routing = routing,
                 preference = preference, refresh = refresh, version = version)
 
+    validate_args(args)
+
     url = httr::modify_url(url, "path" = path, "query" = args)
 
     res = httr::GET(url)

@@ -14,8 +14,8 @@
 #'
 #' @export
 delete <- function (index, type, id, version = NULL, routing = NULL,
-                    parent = NULL, refresh = FALSE, timeout = "1m",
-                    raw = FALSE) {
+                    parent = NULL, replication = "sync", refresh = FALSE,
+                    timeout = "1m", consistency = NULL, raw = FALSE) {
   if (missing(index) || missing(type) || missing(id)) {
     stop()
   }
@@ -24,7 +24,10 @@ delete <- function (index, type, id, version = NULL, routing = NULL,
 
     path = paste(index, type, id, sep="/")
     args = list(version = version, routing = routing, parent = parent,
-                refresh = refresh, timeout = timeout)
+                refresh = refresh, timeout = timeout, replication = replication,
+                consistency = consistency)
+
+    validate_args(args)
 
     url = httr::modify_url(url, "path" = path, "query" = args)
 

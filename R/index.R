@@ -36,6 +36,8 @@ Index <- function (index, type, id, document, version = NULL,
       ValidateArgs(args)
     }
 
+    args = PrepareArgs(args)
+
     url = httr::modify_url(url, "path" = path, "query" = args)
 
     if (!missing(id)) {

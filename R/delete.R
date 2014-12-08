@@ -39,6 +39,8 @@ Delete <- function (index, type, id, query = NULL, version = NULL, routing = NUL
       ValidateArgs(args)
     }
 
+    args = PrepareArgs(args)
+
     url = httr::modify_url(url, "path" = path, "query" = args)
 
     res <- httr::DELETE(url, body = query)
@@ -54,7 +56,11 @@ Delete <- function (index, type, id, query = NULL, version = NULL, routing = NUL
                 refresh = refresh, timeout = timeout, replication = replication,
                 consistency = consistency)
 
-    if (validate) ValidateArgs(args)
+    if (validate.params) {
+      ValidateArgs(args)
+    }
+
+    args = PrepareArgs(args)
 
     url = httr::modify_url(url, "path" = path, "query" = args)
 

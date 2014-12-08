@@ -1,3 +1,4 @@
+#' @export
 FormatESResult <- function (res, raw) {
   if (raw) {
     httr::content(res, as="text")
@@ -6,6 +7,15 @@ FormatESResult <- function (res, raw) {
   }
 }
 
+#' @export
+PrepareArgs <- function (args) {
+  args = args[!sapply(args, is.null)]
+  rapply(args, function (x) {
+    ifelse(is.logical(x), x * 1, x)
+  }, how="replace")
+}
+
+#' @export
 ValidateArgs <- function (args) {
   res = lapply(names(args), function (arg) {
     val = args[[arg]]
@@ -44,4 +54,5 @@ ValidateArgs <- function (args) {
              })
     }
   })
+  args
 }

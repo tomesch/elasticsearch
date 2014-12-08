@@ -26,6 +26,7 @@ Search <- function (index, type, query, from = 0, size = 10, fields = NULL,
   url = getOption("res_url")
 
   # Format path
+  path = ""
   if (missing(index) && missing(type)) {
     path = paste(path, "_search", sep="/")
   } else if (missing(index)) {
@@ -51,10 +52,20 @@ Search <- function (index, type, query, from = 0, size = 10, fields = NULL,
     ValidateArgs(args)
   }
 
+  args = PrepareArgs(args)
+
+  if (validate) {
+    print(path)
+  }
+
   url = httr::modify_url(url, "path" = path, "query" = args)
 
   # Send HTTP request
-  res = httr::POST(url, body = query, encode = "json")
+  if (!missing(query)) {
+    res = httr::POST(url, body = query, encode = "json")
+  } else {
+    res = httr::POST(url)
+  }
   httr::stop_for_status(res)
 
   # Return the result

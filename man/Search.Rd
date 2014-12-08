@@ -6,8 +6,8 @@
 Search(index, type, query, from = 0, size = 10, fields = NULL,
   source = NULL, default_operator = "OR", explain = FALSE,
   analyzer = NULL, timeout = NULL, search_type = "query_then_fetch",
-  lowercase_expanded_terms = TRUE, analyze_wildcard = FALSE, raw = FALSE,
-  validate = TRUE)
+  lowercase_expanded_terms = TRUE, analyze_wildcard = FALSE,
+  validate = FALSE, raw = FALSE, validate.params = TRUE)
 }
 \arguments{
 \item{index}{A string representing the index under wi}

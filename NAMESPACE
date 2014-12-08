@@ -2,8 +2,11 @@
 
 export(Connect)
 export(Delete)
+export(FormatESResult)
 export(Get)
 export(Index)
+export(PrepareArgs)
 export(Search)
 export(Update)
+export(ValidateArgs)
 export(aggregation)

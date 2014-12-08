@@ -38,6 +38,8 @@ Get <- function (index, type = "_all", id, fields = NULL, realtime = TRUE,
     ValidateArgs(args)
   }
 
+  args = PrepareArgs(args)
+
   url = httr::modify_url(url, "path" = path, "query" = args)
 
   res = httr::GET(url)

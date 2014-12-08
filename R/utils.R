@@ -21,6 +21,12 @@ ValidateArgs <- function (args) {
     val = args[[arg]]
     if (!is.null(val)) {
       switch(arg,
+             size = { # WRITE TEST
+              if (all.equal(val, as.integer(val)) != TRUE || val < 0) warning("lol", call. = FALSE, immediate = TRUE)
+             },
+             from = { # WRITE TEST
+               if (all.equal(val, as.integer(val)) != TRUE || val < 0) warning("lol", call. = FALSE, immediate = TRUE)
+             },
              realtime = { # WRITE TEST
               if (!is.logical(val)) warning('"', val, '" is not a valid realtime value. Should be TRUE or FALSE', call. = FALSE, immediate = TRUE)
              },

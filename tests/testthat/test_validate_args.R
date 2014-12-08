@@ -162,6 +162,58 @@ test_that("a wrong version type value produces a warning", {
   expect_that(ValidateArgs(args), not(gives_warning()))
 })
 
+test_that("a wrong from value produces a warning", {
+  args = list(from = "test")
+  expect_warning(ValidateArgs(args))
+
+  args = list(from = "")
+  expect_warning(ValidateArgs(args))
+
+  args = list(from = -1)
+  expect_warning(ValidateArgs(args))
+
+  args = list(from = 1.1)
+  expect_warning(ValidateArgs(args))
+
+  args = list(from = -1.1)
+  expect_warning(ValidateArgs(args))
+
+  args = list(from = 0)
+  expect_that(ValidateArgs(args), not(gives_warning()))
+
+  args = list(from = 1)
+  expect_that(ValidateArgs(args), not(gives_warning()))
+
+  args = list(from = 923)
+  expect_that(ValidateArgs(args), not(gives_warning()))
+})
+
+test_that("a wrong size value produces a warning", {
+  args = list(size = "test")
+  expect_warning(ValidateArgs(args))
+
+  args = list(size = "")
+  expect_warning(ValidateArgs(args))
+
+  args = list(size = -1)
+  expect_warning(ValidateArgs(args))
+
+  args = list(size = 1.1)
+  expect_warning(ValidateArgs(args))
+
+  args = list(size = -1.1)
+  expect_warning(ValidateArgs(args))
+
+  args = list(size = 0)
+  expect_that(ValidateArgs(args), not(gives_warning()))
+
+  args = list(size = 1)
+  expect_that(ValidateArgs(args), not(gives_warning()))
+
+  args = list(size = 923)
+  expect_that(ValidateArgs(args), not(gives_warning()))
+})
+
 test_that("a wrong operation type value produces a warning", {
   args = list(op_type = "test")
   expect_warning(ValidateArgs(args))

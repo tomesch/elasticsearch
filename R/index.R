@@ -17,7 +17,7 @@
 #' @export
 Index <- function (index, type, id, document, version = NULL,
                    version_type = NULL, op_type = NULL, routing = NULL,
-                   timestamp = NULL, ttl = NULL, refresh = FALSE,
+                   parent = NULL, timestamp = NULL, ttl = NULL, refresh = FALSE,
                    timeout = "1m", raw = FALSE, validate.params = TRUE) {
   if (missing(index) || missing(type) || missing(document)) {
     stop()
@@ -27,7 +27,7 @@ Index <- function (index, type, id, document, version = NULL,
     if (!missing(id)) {
       path = paste(path, id, sep="/")
     }
-    args = list(op_type = op_type, version = version,
+    args = list(parent = parent, op_type = op_type, version = version,
                 version_type = version_type, routing = routing,
                 timestamp = timestamp, ttl = ttl, refresh = refresh,
                 timeout = timeout)

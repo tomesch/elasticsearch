@@ -14,23 +14,17 @@
 #' \url{http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/current/api-reference.html#api-indices-delete}
 #'
 #' @export
-Delete_index <- function (index, timeout = "1m", masterTimeout) {
+index.delete <- function (index = "_all", raw = FALSE) {
   if (missing(index)) {
     stop()
   } else {
     url = getOption("res_url")
     path = paste(index, collapse = ",")
-    args = list(timeout = timeout, masterTimeout = masterTimeout)
 
-    if (validate.params) {
-      ValidateArgs(args)
-    }
-
-    args = PrepareArgs(args)
-    url = httr::modify_url(url, "path" = path, "args" = args)
+    url = httr::modify_url(url, "path" = path)
     res = httr::DELETE(url)
     httr::stop_for_status(res)
-    FormatESResult(res, raw)
+
+    formatESResult(res, raw)
   }
 }
-

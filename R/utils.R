@@ -25,6 +25,18 @@ validateArgs <- function (args) {
     val = args[[arg]]
     if (!is.null(val)) {
       switch(arg,
+             max_num_segments = { # WRITE TEST
+               if (all.equal(val, as.integer(val)) != TRUE || val < 0) warning("lol", call. = FALSE, immediate = TRUE)
+             },
+             only_expunge_deletes = { # WRITE TEST
+               if (!is.logical(val)) warning('"', val, '" is not a valid only_expunge_deletes value. Should be TRUE or FALSE', call. = FALSE, immediate = TRUE)
+             },
+             flush = { # WRITE TEST
+               if (!is.logical(val)) warning('"', val, '" is not a valid flush value. Should be TRUE or FALSE', call. = FALSE, immediate = TRUE)
+             },
+             wait_for_merge = { # WRITE TEST
+               if (!is.logical(val)) warning('"', val, '" is not a valid wait_for_merge value. Should be TRUE or FALSE', call. = FALSE, immediate = TRUE)
+             },
              size = { # WRITE TEST
               if (all.equal(val, as.integer(val)) != TRUE || val < 0) warning("lol", call. = FALSE, immediate = TRUE)
              },
@@ -40,7 +52,7 @@ validateArgs <- function (args) {
              consistency = {
                if (!(val %in% c("one", "quorum", "all"))) warning('"', val, '" is not a valid consistency value. Should be one of "one", "quorum" or "all"', call. = FALSE, immediate = TRUE)
              },
-             ignore_unavailable = {
+             ignore_unavailable = { # WRITE TEST
                if (!is.logical(val)) warning('"', val, '" is not a valid ignore_unavailable value. Should be TRUE or FALSE', call. = FALSE, immediate = TRUE)
              },
              refresh = {

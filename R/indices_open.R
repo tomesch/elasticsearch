@@ -18,6 +18,3 @@ indices.open <- function (index = "_all", ignore_unavailable = FALSE,
 
   formatESResult(res, raw)
 }
-
-
-

@@ -1,5 +1,5 @@
 #' @export
-indices.exists <- function (index, raw = FALSE) {
+indices.exists <- function (index) {
   if (missing(index)) {
     stop()
   }

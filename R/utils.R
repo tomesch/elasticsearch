@@ -40,6 +40,9 @@ validateArgs <- function (args) {
              consistency = {
                if (!(val %in% c("one", "quorum", "all"))) warning('"', val, '" is not a valid consistency value. Should be one of "one", "quorum" or "all"', call. = FALSE, immediate = TRUE)
              },
+             ignore_unavailable = {
+               if (!is.logical(val)) warning('"', val, '" is not a valid ignore_unavailable value. Should be TRUE or FALSE', call. = FALSE, immediate = TRUE)
+             },
              refresh = {
                if (!is.logical(val)) warning('"', val, '" is not a valid refresh value. Should be TRUE or FALSE', call. = FALSE, immediate = TRUE)
              },

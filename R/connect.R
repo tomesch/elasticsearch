@@ -1,14 +1,14 @@
 #' @export
-Connect <- function (url = "http://127.0.0.1:9200/", raw = FALSE) {
+connect <- function (url = "http://127.0.0.1:9200/", raw = FALSE) {
   url = httr::parse_url(url)
 
   res <- httr::GET(url)
   httr::stop_for_status(res)
-  Configure(url)
+  configure(url)
 
-  FormatESResult(res, raw)
+  formatESResult(res, raw)
 }
 
-Configure <- function (url) {
+configure <- function (url) {
   options(res_url = url)
 }

@@ -13,7 +13,7 @@
 #' \url{http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-delete.html}
 #'
 #' @export
-Delete <- function (index, type, id, query = NULL, version = NULL, routing = NULL,
+delete <- function (index, type, id, query = NULL, version = NULL, routing = NULL,
                     parent = NULL, replication = "sync", refresh = FALSE,
                     timeout = "1m", consistency = NULL, raw = FALSE,
                     validate.params = TRUE) {
@@ -36,17 +36,17 @@ Delete <- function (index, type, id, query = NULL, version = NULL, routing = NUL
                 consistency = consistency)
 
     if (validate.params) {
-      ValidateArgs(args)
+      validateArgs(args)
     }
 
-    args = PrepareArgs(args)
+    args = prepareArgs(args)
 
     url = httr::modify_url(url, "path" = path, "query" = args)
 
     res <- httr::DELETE(url, body = query)
     httr::stop_for_status(res)
 
-    FormatESResult(res, raw)
+    formatESResult(res, raw)
   } else if(!missing(id) && !missing(index) && !missing(type)) {
     # delete by id API
     url = getOption("res_url")
@@ -57,17 +57,17 @@ Delete <- function (index, type, id, query = NULL, version = NULL, routing = NUL
                 consistency = consistency)
 
     if (validate.params) {
-      ValidateArgs(args)
+      validateArgs(args)
     }
 
-    args = PrepareArgs(args)
+    args = prepareArgs(args)
 
     url = httr::modify_url(url, "path" = path, "query" = args)
 
     res <- httr::DELETE(url)
     httr::stop_for_status(res)
 
-    FormatESResult(res, raw)
+    formatESResult(res, raw)
   } else {
     stop()
   }

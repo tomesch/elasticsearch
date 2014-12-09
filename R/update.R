@@ -14,7 +14,7 @@
 #' \url{http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-update.html}
 #'
 #' @export
-Update <- function (index, type, id, body, routing = NULL, parent = NULL,
+update <- function (index, type, id, body, routing = NULL, parent = NULL,
                     timeout = "1m", refresh = FALSE, fields = NULL,
                     version = NULL, validate.params = TRUE) {
   if (missing(index) || missing(type) || missing(id) || missing(script)) {
@@ -31,16 +31,16 @@ Update <- function (index, type, id, body, routing = NULL, parent = NULL,
                 refresh = refresh, fields = fields, version = version)
 
     if (validate.params) {
-      ValidateArgs(args)
+      validateArgs(args)
     }
 
-    args = PrepareArgs(args)
+    args = prepareArgs(args)
 
     url = httr::modify_url(url, "path" = path, "query" = args)
 
     res <- httr::POST(url, body=script, content_type_json())
     stop_for_status(res)
 
-    FormatESResult(res, raw)
+    formatESResult(res, raw)
   }
 }

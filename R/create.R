@@ -1,5 +1,5 @@
 #' @export
-Create <- function (index, type, id, document, version = NULL,
+create <- function (index, type, id, document, version = NULL,
                     version_type = NULL, routing = NULL,
                     parent = NULL, timestamp = NULL, ttl = NULL, refresh = FALSE,
                     timeout = "1m", raw = FALSE, validate.params = TRUE) {

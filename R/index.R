@@ -15,7 +15,7 @@
 #' \url{http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-index_.html}
 #'
 #' @export
-Index <- function (index, type, id, document, version = NULL,
+index <- function (index, type, id, document, version = NULL,
                    version_type = NULL, op_type = NULL, routing = NULL,
                    parent = NULL, timestamp = NULL, ttl = NULL, refresh = FALSE,
                    timeout = "1m", raw = FALSE, validate.params = TRUE) {
@@ -33,10 +33,10 @@ Index <- function (index, type, id, document, version = NULL,
                 timeout = timeout)
 
     if (validate.params) {
-      ValidateArgs(args)
+      validateArgs(args)
     }
 
-    args = PrepareArgs(args)
+    args = prepareArgs(args)
 
     url = httr::modify_url(url, "path" = path, "query" = args)
 
@@ -47,6 +47,6 @@ Index <- function (index, type, id, document, version = NULL,
     }
     httr::stop_for_status(res)
 
-    FormatESResult(res, raw)
+    formatESResult(res, raw)
   }
 }

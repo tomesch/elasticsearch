@@ -17,8 +17,8 @@
 #' \url{http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-search.html#search-search}
 #'
 #' @export
-Search <- function (index, type, query, from = 0, size = 10, fields = NULL,
-                    source = NULL, default_operator="OR", explain=FALSE,
+search <- function (index, type, query, from = 0, size = 10, fields = NULL,
+                    source = NULL, default_operator = "OR", explain = FALSE,
                     analyzer = NULL, timeout = NULL,
                     search_type = "query_then_fetch",
                     lowercase_expanded_terms = TRUE, analyze_wildcard = FALSE,
@@ -49,10 +49,10 @@ Search <- function (index, type, query, from = 0, size = 10, fields = NULL,
               analyze_wildcard = analyze_wildcard, from = from, size = size)
 
   if (validate.params) {
-    ValidateArgs(args)
+    validateArgs(args)
   }
 
-  args = PrepareArgs(args)
+  args = prepareArgs(args)
 
   if (validate) {
     print(path)
@@ -69,5 +69,5 @@ Search <- function (index, type, query, from = 0, size = 10, fields = NULL,
   httr::stop_for_status(res)
 
   # Return the result
-  FormatESResult(res, raw)
+  formatESResult(res, raw)
 }

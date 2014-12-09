@@ -1,14 +1,18 @@
 #' @export
-FormatESResult <- function (res, raw) {
+formatESResult <- function (res, raw) {
+  body = httr::content(res, as="text")
+  if (body == "") {
+    return()
+  }
   if (raw) {
-    httr::content(res, as="text")
+    body
   } else {
-    jsonlite::fromJSON(httr::content(res, as="text"))
+    jsonlite::fromJSON(body)
   }
 }
 
 #' @export
-PrepareArgs <- function (args) {
+prepareArgs <- function (args) {
   args = args[!sapply(args, is.null)]
   rapply(args, function (x) {
     ifelse(is.logical(x), x * 1, x)
@@ -16,7 +20,7 @@ PrepareArgs <- function (args) {
 }
 
 #' @export
-ValidateArgs <- function (args) {
+validateArgs <- function (args) {
   res = lapply(names(args), function (arg) {
     val = args[[arg]]
     if (!is.null(val)) {

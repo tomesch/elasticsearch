@@ -2,7 +2,7 @@
 #'
 #' \code{delete} deletes a document from an index based on its id.
 #'
-#' @param index A string representing the index 
+#' @param index A string representing the index
 #' @param type A string representing the type
 #' @param id A string representing the id
 #'
@@ -28,7 +28,7 @@ delete <- function (index, type, id, query = NULL, version = NULL, routing = NUL
     } else if (missing(type)) {
       path = paste(paste(index, collapse = ","), '_query', sep="/")
     } else {
-      path = paste(paste(index, collapse = ","), paste(type, collapse = ","), sep="/")
+      path = paste(paste(index, collapse = ","), paste(type, collapse = ","), '_query', sep="/")
     }
 
     args = list(version = version, routing = routing, parent = parent,

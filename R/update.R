@@ -5,7 +5,14 @@
 #' @param index A string representing the index
 #' @param type A string representing the type
 #' @param id A string representing the id
-#' @param script A string representing the script
+#' @param body A string representing the body
+#' @param routing A string allowing to control the _routing aspect when indexing data and explicit routing control is required.
+#' @param parent A string pointing to the parent type this child relates to.
+#' @param timeout A string representing the value of the timeout 
+#' @param refresh A boolean that allows to explicitly refresh one or more index, making all operations performed since the last refresh. 
+#' @param fields A string representing the fields.
+#' @param version A string representing the return of a version for each search hit.
+#' @param validate.params A boolean indicating the need to validate the passing parameters or not.
 #'
 #' @examples
 #' update("twitter", "tweet", 1)

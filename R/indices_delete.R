@@ -3,8 +3,7 @@
 #' \code{Delete_index} Deletes data in an index.
 #'
 #' @param index A string representing the index
-#' @param timeout A string representing the timeout
-#' @param masterTimeout A string representing the masterTimeout
+#' @param timeout A string representing the value of the timeout
 #'
 #' @examples
 #' index("twitter", "tweet")

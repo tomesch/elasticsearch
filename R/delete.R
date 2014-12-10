@@ -2,9 +2,9 @@
 #'
 #' \code{delete} deletes a document from an index based on its id.
 #'
-#' @param index A string representing the index under wi
-#' @param type A string representing the index under wi
-#' @param id A string representing the index under wi
+#' @param index A string representing the index 
+#' @param type A string representing the type
+#' @param id A string representing the id
 #'
 #' @examples
 #' delete("twitter", "tweet", 1)

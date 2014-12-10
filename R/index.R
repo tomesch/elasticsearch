@@ -2,10 +2,10 @@
 #'
 #' \code{index} adds or updates a document in a specific index.
 #'
-#' @param index A string representing the index under wi
-#' @param type A string representing the index under wi
-#' @param id A string representing the index under wi
-#' @param document A string representing the index under wi
+#' @param index A string representing the index 
+#' @param type A string representing the type
+#' @param id A string representing the id
+#' @param document A string representing the document
 #'
 #' @examples
 #' index("twitter", "tweet", 1, '{"test_index": "text_index"}')

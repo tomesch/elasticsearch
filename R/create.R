@@ -6,5 +6,5 @@ create <- function (index, type, id, document, version = NULL,
   args = as.list(match.call())
   args[[1]] = NULL
   args[['op_type']] = 'create'
-  do.call(Index, args)
+  do.call(index, args)
 }

@@ -18,21 +18,24 @@
 #' \url{http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-get.html}
 #'
 #' @export
-get <- function (index, type = "_all", id, fields = NULL, realtime = TRUE,
-                 routing = NULL, preference = NULL, refresh = FALSE,
-                 version = NULL, exists = FALSE, raw = FALSE,
-                 validate.params = TRUE) {
+get <- function (index, type = "_all", id, fields = NULL, source = TRUE,
+                 realtime = TRUE, routing = NULL, preference = NULL,
+                 refresh = FALSE, version = NULL, exists = FALSE, raw = FALSE,
+                 validate.params = TRUE, get.source = FALSE) {
   if (missing(index) || missing(id)) {
     stop()
   }
   url = getOption("res_url")
 
-  path = paste(index, type, id, sep = "/")
+  path = paste(index, paste(type, collapse = ","), id, sep = "/")
+  if (get.source) {
+    path = paste(path, '_source', sep = "/")
+  }
 
   if (!is.null(fields)) {
     fields = paste(fields, collapse = ",")
   }
-  args = list(fields = fields, realtime = realtime, routing = routing,
+  args = list("_source" = source, fields = fields, realtime = realtime, routing = routing,
               preference = preference, refresh = refresh, version = version)
 
   if (validate.params) {

@@ -33,7 +33,7 @@ delete <- function (index, type, id, query = NULL, version = NULL, routing = NUL
 
     args = list(version = version, routing = routing, parent = parent,
                 refresh = refresh, timeout = timeout, replication = replication,
-                consistency = consistency)
+                consistency = consistency, source = query)
 
     if (validate.params) {
       validateArgs(args)
@@ -43,7 +43,8 @@ delete <- function (index, type, id, query = NULL, version = NULL, routing = NUL
 
     url = httr::modify_url(url, "path" = path, "query" = args)
 
-    res <- httr::DELETE(url, body = query)
+    print(url)
+    res <- httr::DELETE(url)
     httr::stop_for_status(res)
 
     formatESResult(res, raw)

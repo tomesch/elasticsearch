@@ -43,7 +43,6 @@ delete <- function (index, type, id, query = NULL, version = NULL, routing = NUL
 
     url = httr::modify_url(url, "path" = path, "query" = args)
 
-    print(url)
     res <- httr::DELETE(url)
     httr::stop_for_status(res)
 

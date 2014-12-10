@@ -19,7 +19,7 @@
 #'
 #' @export
 get <- function (index, type = "_all", id, fields = NULL, source = TRUE,
-                 realtime = TRUE, routing = NULL, preference = NULL,
+                 source_include = NULL, source_exclude = NULL, realtime = TRUE, routing = NULL, preference = NULL,
                  refresh = FALSE, version = NULL, exists = FALSE, raw = FALSE,
                  validate.params = TRUE, get.source = FALSE) {
   if (missing(index) || missing(id)) {
@@ -35,7 +35,14 @@ get <- function (index, type = "_all", id, fields = NULL, source = TRUE,
   if (!is.null(fields)) {
     fields = paste(fields, collapse = ",")
   }
-  args = list("_source" = source, fields = fields, realtime = realtime, routing = routing,
+  if (!is.null(source_include)) {
+    source_include = paste(source_include, collapse = ",")
+  }
+  if (!is.null(source_exclude)) {
+    source_exclude = paste(source_exclude, collapse = ",")
+  }
+
+  args = list("_source_exclude" = source_exclude, "_source_include" = source_include, "_source" = source, fields = fields, realtime = realtime, routing = routing,
               preference = preference, refresh = refresh, version = version)
 
   if (validate.params) {

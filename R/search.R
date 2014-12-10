@@ -19,8 +19,8 @@
 #' @export
 search <- function (index, type, query, from = 0, size = 10, fields = NULL,
                     source = NULL, default_operator = "OR", explain = FALSE,
-                    analyzer = NULL, timeout = NULL,
-                    search_type = "query_then_fetch",
+                    analyzer = NULL, timeout = NULL, source_include = NULL,
+                    search_type = "query_then_fetch", source_exclude = NULL,
                     lowercase_expanded_terms = TRUE, analyze_wildcard = FALSE,
                     validate = FALSE, raw = FALSE, validate.params = TRUE) {
   url = getOption("res_url")
@@ -41,10 +41,18 @@ search <- function (index, type, query, from = 0, size = 10, fields = NULL,
   if (!is.null(fields)) {
     fields = paste(fields, collapse = ",")
   }
+  if (!is.null(source_include)) {
+    source_include = paste(source_include, collapse = ",")
+  }
+  if (!is.null(source_exclude)) {
+    source_exclude = paste(source_exclude, collapse = ",")
+  }
 
-  args = list(fields = fields, "_source" = source,
-              default_operator = default_operator, explain = explain,
-              analyzer = analyzer, timeout = timeout, search_type = search_type,
+  args = list("_source_exclude" = source_exclude,
+              "_source_include" = source_include, fields = fields,
+              "_source" = source, default_operator = default_operator,
+              explain = explain, analyzer = analyzer, timeout = timeout,
+              search_type = search_type,
               lowercase_expanded_terms = lowercase_expanded_terms,
               analyze_wildcard = analyze_wildcard, from = from, size = size)
 

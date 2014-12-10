@@ -42,7 +42,9 @@ get <- function (index, type = "_all", id, fields = NULL, source = TRUE,
     source_exclude = paste(source_exclude, collapse = ",")
   }
 
-  args = list("_source_exclude" = source_exclude, "_source_include" = source_include, "_source" = source, fields = fields, realtime = realtime, routing = routing,
+  args = list("_source_exclude" = source_exclude,
+              "_source_include" = source_include, "_source" = source,
+              fields = fields, realtime = realtime, routing = routing,
               preference = preference, refresh = refresh, version = version)
 
   if (validate.params) {

@@ -2,12 +2,25 @@
 #'
 #' \code{search} executes a search query and retrieves results macking the query
 #'
-#' @param index A string representing the index
-#' @param type A string representing the type
-#' @param query A string representing the query
-#' @param from A string representing the beginning of the interval we are interested in
-#' @param size A string representing the size
-#' @param fields A string representing the fields
+#' @param index A string representing the index.
+#' @param type A string representing the type.
+#' @param query A string representing the query.
+#' @param from A string representing the beginning of the interval we are interested in.
+#' @param size A string representing the size.
+#' @param fields A string representing the fields.
+#' @param source A boolean representing our choice to return the contents of the _source field or not.
+#' @param default_operator A string representing the default operator.
+#' @param explain A boolean enabling explanation for each hit on how its score was computed.
+#' @param analyzer A string that allows to use a document field property as the name of the analyzer that will be used to index the document.
+#' @param timeout A string representing the value of the timeout .
+#' @param source_include A string representing the source_include; include parameters that you want to display in the returned source.  
+#' @param source_exclude A string representing the source_exclude; filter parameters that you do not want to display in the returned source.
+#' @param search_type A string representing the type of the search.
+#' @param lowercase_expanded_terms A boolean indicating if the wildcard has lower case characters.
+#' @param analyze_wildcard A boolean indicating, when true, that an attempt will be made to analyze wildcarded words before searching the term list for matching terms.
+#' @param validate A boolean that allows a user to validate a potentially expensive query without executing it. 
+#' @param raw A boolean that indicates if the format of the response should be in json or not.
+#' @param validate.params A boolean indicating the need to validate the passing parameters or not.
 #'
 #' @examples
 #' search("twitter", id="1")

@@ -2,11 +2,11 @@
 #'
 #' \code{get} searches a document in an index based on its id and returns it.
 #'
-#' @param index A string representing the index under wi
-#' @param type A string representing the index under wi
-#' @param id A string representing the index under wi
-#' @param field A string representing the index under wi
-#' @param raw A string representing the index under wi
+#' @param index A string representing the index
+#' @param type A string representing the type
+#' @param id A string representing the id
+#' @param field A string representing the field
+#' @param raw A string representing the format
 #'
 #' @examples
 #' get("twitter", id="1")

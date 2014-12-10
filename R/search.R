@@ -1,13 +1,13 @@
 #' Execute a search query and retrieve results macking the query
 #'
-#' \code{search} executes a search query and retrieves∆ results macking the query
+#' \code{search} executes a search query and retrieves results macking the query
 #'
-#' @param index A string representing the index under wi
-#' @param type A string representing the index under wi
-#' @param query A string representing the index under wi
-#' @param from A string representing the index under wi
-#' @param size A string representing the index under wi
-#' @param fields A string representing the index under wi
+#' @param index A string representing the index
+#' @param type A string representing the type
+#' @param query A string representing the query
+#' @param from A string representing the beginning of the interval we are interested in
+#' @param size A string representing the size
+#' @param fields A string representing the fields
 #'
 #' @examples
 #' search("twitter", id="1")

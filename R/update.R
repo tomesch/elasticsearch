@@ -2,10 +2,10 @@
 #'
 #' \code{update} updates a document based on a script provided.
 #'
-#' @param index A string representing the index under wi
-#' @param type A string representing the index under wi
-#' @param id A string representing the index under wi
-#' @param script A string representing the index under wi
+#' @param index A string representing the index
+#' @param type A string representing the type
+#' @param id A string representing the id
+#' @param script A string representing the script
 #'
 #' @examples
 #' update("twitter", "tweet", 1)

@@ -6,6 +6,17 @@
 #' @param type A string representing the type
 #' @param id A string representing the id
 #' @param document A string representing the document
+#' @param version A string representing the return of a version for each search hit.
+#' @param version_type A string representing the version type.
+#' @param op_type A string representing the operation type.
+#' @param routing A string allowing to control the _routing aspect when indexing data and explicit routing control is required.
+#' @param parent A string pointing to the parent type this child relates to.
+#' @param timestamp A string indicating the value of the associated timestamp for this document. 
+#' @param ttl A string representing the time to live. 
+#' @param refresh A boolean that allows to explicitly refresh one or more index, making all operations performed since the last refresh. 
+#' @param timeout A string representing the value of the timeout 
+#' @param raw A boolean that indicates if the format of the response should be in json or not.
+#' @param validate.params A boolean indicating the need to validate the passing parameters or not.
 #'
 #' @examples
 #' index("twitter", "tweet", 1, '{"test_index": "text_index"}')

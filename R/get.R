@@ -16,8 +16,7 @@
 #' @param version A string representing the return of a version for each search hit.
 #' @param exists A boolean that returns documents that have at least one non-null value in the original field.
 #' @param raw A boolean that indicates if the format of the response should be in json or not.
-#' @param validate.params A boolean representing the validate.params
-#' @param get.source A boolean representing the get.source
+#' @param validate.params A boolean indicating the need to validate the passing parameters or not.
 #'
 #' @examples
 #' get("twitter", id="1")

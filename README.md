@@ -4,7 +4,6 @@ Simple Elasticsearch client for R
 
 ##Features (WIP !!!)
 ###Documents API
-- connect
 - count
 - create
 - delete

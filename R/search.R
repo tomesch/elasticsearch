@@ -1,6 +1,6 @@
-#' Execute a search query and retrieve results macking the query
+#' Execute a search query and retrieve results making the query
 #'
-#' \code{search} executes a search query and retrieves results macking the query
+#' \code{search} executes a search query and retrieves results making the query
 #'
 #' @param index A string representing the index.
 #' @param type A string representing the type.

@@ -9,7 +9,7 @@
 #' @param source A boolean representing our choice to return the contents of the _source field or not.
 #' @param source_include A string representing the source_include; include parameters that you want to display in the returned source.  
 #' @param source_exclude A string representing the source_exclude; filter parameters that you do not want to display in the returned source.
-#' @param realtime A boolean representing if the result should be realtime or not/
+#' @param realtime A boolean representing if the result should be realtime or not
 #' @param routing A string allowing to control the _routing aspect when indexing data and explicit routing control is required.
 #' @param preference A string that controls a preference of which shard replicas to execute the search request on. 
 #' @param refresh A boolean that allows to explicitly refresh one or more index, making all operations performed since the last refresh available for search. 

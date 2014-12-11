@@ -1,4 +1,4 @@
-#'  Retrieve source from index
+#'Retrieve source from index
 #'
 #' \code{getSource} retrieves source from index
 #'

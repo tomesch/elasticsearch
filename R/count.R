@@ -1,3 +1,11 @@
+#' Count items that match a query.
+#'
+#' \code{count} counts items that match a query.
+#'
+#' @param index A string representing the index.
+#' @param type A string representing the type.
+#' @param query A string representing the query
+#' 
 #' @export
 count <- function (index, type, query) {
   url = getOption("res_url")

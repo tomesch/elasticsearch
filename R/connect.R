@@ -1,3 +1,4 @@
+
 #' @export
 connect <- function (url = "http://127.0.0.1:9200/", raw = FALSE) {
   url = httr::parse_url(url)

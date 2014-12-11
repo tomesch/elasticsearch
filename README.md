@@ -37,7 +37,7 @@ install_github("tomesch/elasticsearch")
 
 ##Examples
 ```R
-connect("http://localhost:9000/")
+connect("http://localhost:9200/")
 #> $status
 #> [1] 200
 #> $name

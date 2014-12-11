@@ -32,6 +32,7 @@ You will need the devtools package in order to install this package
 install.packages("devtools")
 library(devtools)
 install_github("tomesch/elasticsearch")
+library(elasticsearch)
 ```
 
 ##Examples

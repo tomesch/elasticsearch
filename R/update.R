@@ -23,7 +23,7 @@
 #' @export
 update <- function (client, index, type, id, body, routing = NULL, parent = NULL,
                     timeout = "1m", refresh = FALSE, fields = NULL,
-                    version = NULL, validate.params = TRUE) {
+                    version = NULL, validate.params = TRUE, raw = FALSE) {
   UseMethod("update", client)
 }
 
@@ -31,8 +31,8 @@ update <- function (client, index, type, id, body, routing = NULL, parent = NULL
 #' @export
 update.elasticsearch <- function (client, index, type, id, body, routing = NULL, parent = NULL,
                     timeout = "1m", refresh = FALSE, fields = NULL,
-                    version = NULL, validate.params = TRUE) {
-  if (missing(index) || missing(type) || missing(id) || missing(script)) {
+                    version = NULL, validate.params = TRUE, raw = FALSE) {
+  if (missing(index) || missing(type) || missing(id)) {
     stop()
   } else {
     path = paste(index, type, id, "_update", sep="/")
@@ -51,8 +51,8 @@ update.elasticsearch <- function (client, index, type, id, body, routing = NULL,
 
     url = httr::modify_url(client$url, "path" = path, "query" = args)
 
-    res <- httr::POST(url, body=script, content_type_json())
-    stop_for_status(res)
+    res <- httr::POST(url, body=body, encode = "json")
+    httr::stop_for_status(res)
 
     formatESResult(res, raw)
   }

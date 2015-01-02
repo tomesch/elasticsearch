@@ -12,15 +12,22 @@
 #' @references
 #' \url{http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-delete.html}
 #'
+#' @export delete
+delete <- function (client, index, type, id, query = NULL, version = NULL, routing = NULL,
+                    parent = NULL, replication = "sync", refresh = FALSE,
+                    timeout = "1m", consistency = NULL, raw = FALSE,
+                    validate.params = TRUE) {
+  UseMethod("delete", client)
+}
+
+#' @rdname delete
 #' @export
-delete <- function (index, type, id, query = NULL, version = NULL, routing = NULL,
+delete.elasticsearch <- function (client, index, type, id, query = NULL, version = NULL, routing = NULL,
                     parent = NULL, replication = "sync", refresh = FALSE,
                     timeout = "1m", consistency = NULL, raw = FALSE,
                     validate.params = TRUE) {
   if (!is.null(query)) {
     # delete by query API
-    url = getOption("res_url")
-
     if(missing(index) && missing(type)) {
       path = paste('_all', '_query', sep="/")
     } else if (missing(index)) {
@@ -41,7 +48,7 @@ delete <- function (index, type, id, query = NULL, version = NULL, routing = NUL
 
     args = prepareArgs(args)
 
-    url = httr::modify_url(url, "path" = path, "query" = args)
+    url = httr::modify_url(client$url, "path" = path, "query" = args)
 
     res <- httr::DELETE(url)
     httr::stop_for_status(res)
@@ -49,8 +56,6 @@ delete <- function (index, type, id, query = NULL, version = NULL, routing = NUL
     formatESResult(res, raw)
   } else if(!missing(id) && !missing(index) && !missing(type)) {
     # delete by id API
-    url = getOption("res_url")
-
     path = paste(index, type, id, sep="/")
     args = list(version = version, routing = routing, parent = parent,
                 refresh = refresh, timeout = timeout, replication = replication,
@@ -62,7 +67,7 @@ delete <- function (index, type, id, query = NULL, version = NULL, routing = NUL
 
     args = prepareArgs(args)
 
-    url = httr::modify_url(url, "path" = path, "query" = args)
+    url = httr::modify_url(client$url, "path" = path, "query" = args)
 
     res <- httr::DELETE(url)
     httr::stop_for_status(res)

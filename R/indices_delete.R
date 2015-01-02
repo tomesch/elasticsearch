@@ -13,11 +13,16 @@
 #' \url{http://www.elasticsearch.org/guide/en/elasticsearch/client/javascript-api/current/api-reference.html#api-indices-delete}
 #'
 #' @export
-indices.delete <- function (index = "_all", raw = FALSE) {
-  url = getOption("res_url")
+indices.delete <- function (client, index = "_all", raw = FALSE) {
+  UseMethod("indices.delete", client)
+}
+
+#' @rdname indices.delete
+#' @export
+indices.delete.elasticsearch <- function (client, index = "_all", raw = FALSE) {
   path = paste(index, collapse = ",")
 
-  url = httr::modify_url(url, "path" = path)
+  url = httr::modify_url(client$url, "path" = path)
   res = httr::DELETE(url)
   httr::stop_for_status(res)
 

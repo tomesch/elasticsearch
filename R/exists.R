@@ -1,5 +1,13 @@
 #' @export
-exists <- function (index, type = "_all", id, fields = NULL, realtime = TRUE,
+exists <- function (client, index, type = "_all", id, fields = NULL, realtime = TRUE,
+                    routing = NULL, preference = NULL, refresh = FALSE,
+                    version = NULL, validate.params = TRUE) {
+  UseMethod("exists", client)
+}
+
+#' @rdname exists
+#' @export
+exists.elasticsearch <- function (client, index, type = "_all", id, fields = NULL, realtime = TRUE,
                     routing = NULL, preference = NULL, refresh = FALSE,
                     version = NULL, validate.params = TRUE) {
   args = as.list(match.call())

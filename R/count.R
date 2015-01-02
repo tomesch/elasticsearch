@@ -5,9 +5,15 @@
 #' @param index A string representing the index.
 #' @param type A string representing the type.
 #' @param query A string representing the query
-#' 
+#'
 #' @export
-count <- function (index, type, query) {
+count <- function (client, index, type, query) {
+  UseMethod("count", client)
+}
+
+#' @rdname count
+#' @export
+count.elasticsearch <- function (client, index, type, query, raw = FALSE) {
   url = getOption("res_url")
 
   # Format path
@@ -23,7 +29,7 @@ count <- function (index, type, query) {
                  paste(type, collapse = ","), "_count", sep="/")
   }
 
-  url = httr::modify_url(url, "path" = path)
+  url = httr::modify_url(client$url, "path" = path)
 
   # Send HTTP request
   if (!missing(query)) {

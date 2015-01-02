@@ -7,12 +7,12 @@
 #' @param id A string representing the id.
 #' @param fields A string representing the fields.
 #' @param source A boolean representing our choice to return the contents of the _source field or not.
-#' @param source_include A string representing the source_include; include parameters that you want to display in the returned source.  
+#' @param source_include A string representing the source_include; include parameters that you want to display in the returned source.
 #' @param source_exclude A string representing the source_exclude; filter parameters that you do not want to display in the returned source.
 #' @param realtime A boolean representing if the result should be realtime or not
 #' @param routing A string allowing to control the _routing aspect when indexing data and explicit routing control is required.
-#' @param preference A string that controls a preference of which shard replicas to execute the search request on. 
-#' @param refresh A boolean that allows to explicitly refresh one or more index, making all operations performed since the last refresh available for search. 
+#' @param preference A string that controls a preference of which shard replicas to execute the search request on.
+#' @param refresh A boolean that allows to explicitly refresh one or more index, making all operations performed since the last refresh available for search.
 #' @param version A string representing the return of a version for each search hit.
 #' @param exists A boolean that returns documents that have at least one non-null value in the original field.
 #' @param raw A boolean that indicates if the format of the response should be in json or not.
@@ -26,16 +26,23 @@
 #'
 #' @references
 #' \url{http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-get.html}
-#'
+#' @export get
+get <- function (client, index, type = "_all", id, fields = NULL, source = TRUE,
+                 source_include = NULL, source_exclude = NULL, realtime = TRUE, routing = NULL, preference = NULL,
+                 refresh = FALSE, version = NULL, exists = FALSE, raw = FALSE,
+                 validate.params = TRUE, get.source = FALSE) {
+  UseMethod("get", client)
+}
+
+#' @rdname get
 #' @export
-get <- function (index, type = "_all", id, fields = NULL, source = TRUE,
+get.elasticsearch <- function (client, index, type = "_all", id, fields = NULL, source = TRUE,
                  source_include = NULL, source_exclude = NULL, realtime = TRUE, routing = NULL, preference = NULL,
                  refresh = FALSE, version = NULL, exists = FALSE, raw = FALSE,
                  validate.params = TRUE, get.source = FALSE) {
   if (missing(index) || missing(id)) {
     stop()
   }
-  url = getOption("res_url")
 
   path = paste(index, paste(type, collapse = ","), id, sep = "/")
   if (get.source) {
@@ -63,7 +70,7 @@ get <- function (index, type = "_all", id, fields = NULL, source = TRUE,
 
   args = prepareArgs(args)
 
-  url = httr::modify_url(url, "path" = path, "query" = args)
+  url = httr::modify_url(client$url, "path" = path, "query" = args)
 
   if (exists) {
     res = httr::HEAD(url)

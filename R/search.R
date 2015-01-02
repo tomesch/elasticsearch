@@ -13,12 +13,12 @@
 #' @param explain A boolean enabling explanation for each hit on how its score was computed.
 #' @param analyzer A string that allows to use a document field property as the name of the analyzer that will be used to index the document.
 #' @param timeout A string representing the value of the timeout .
-#' @param source_include A string representing the source_include; include parameters that you want to display in the returned source.  
+#' @param source_include A string representing the source_include; include parameters that you want to display in the returned source.
 #' @param source_exclude A string representing the source_exclude; filter parameters that you do not want to display in the returned source.
 #' @param search_type A string representing the type of the search.
 #' @param lowercase_expanded_terms A boolean indicating if the wildcard has lower case characters.
 #' @param analyze_wildcard A boolean indicating, when true, that an attempt will be made to analyze wildcarded words before searching the term list for matching terms.
-#' @param validate A boolean that allows a user to validate a potentially expensive query without executing it. 
+#' @param validate A boolean that allows a user to validate a potentially expensive query without executing it.
 #' @param raw A boolean that indicates if the format of the response should be in json or not.
 #' @param validate.params A boolean indicating the need to validate the passing parameters or not.
 #'
@@ -30,14 +30,23 @@
 #' \url{http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-search.html#search-search}
 #'
 #' @export
-search <- function (index, type, query, from = 0, size = 10, fields = NULL,
+search <- function (client, index, type, query, from = 0, size = 10, fields = NULL,
                     source = NULL, default_operator = "OR", explain = FALSE,
                     analyzer = NULL, timeout = NULL, source_include = NULL,
                     search_type = "query_then_fetch", source_exclude = NULL,
                     lowercase_expanded_terms = TRUE, analyze_wildcard = FALSE,
                     validate = FALSE, raw = FALSE, validate.params = TRUE) {
-  url = getOption("res_url")
+  UseMethod("search", client)
+}
 
+#' @rdname search
+#' @export
+search.elasticsearch <- function (client, index, type, query, from = 0, size = 10, fields = NULL,
+                    source = NULL, default_operator = "OR", explain = FALSE,
+                    analyzer = NULL, timeout = NULL, source_include = NULL,
+                    search_type = "query_then_fetch", source_exclude = NULL,
+                    lowercase_expanded_terms = TRUE, analyze_wildcard = FALSE,
+                    validate = FALSE, raw = FALSE, validate.params = TRUE) {
   # Format path
   path = ""
   if (missing(index) && missing(type)) {
@@ -79,7 +88,7 @@ search <- function (index, type, query, from = 0, size = 10, fields = NULL,
     print(path)
   }
 
-  url = httr::modify_url(url, "path" = path, "query" = args)
+  url = httr::modify_url(client$url, "path" = path, "query" = args)
 
   # Send HTTP request
   if (!missing(query)) {

@@ -1,8 +1,15 @@
 #' @export
-indices.optimize <- function (index = "_all", max_num_segments = NULL,
+indices.optimize <- function (client, index = "_all", max_num_segments = NULL,
+                              only_expunge_deletes = FALSE, flush = TRUE,
+                              wait_for_merge = TRUE, raw = FALSE, validate.params = TRUE) {
+  UseMethod("indices.optimize", client)
+}
+
+#' @rdname indices.optimize
+#' @export
+indices.optimize.elasticsearch <- function (client, index = "_all", max_num_segments = NULL,
                           only_expunge_deletes = FALSE, flush = TRUE,
                           wait_for_merge = TRUE, raw = FALSE, validate.params = TRUE) {
-  url = getOption("res_url")
   path = paste(paste(index, collapse = ","), "_optimize", sep = "/")
 
   args = list(max_num_segments = max_num_segments,
@@ -15,7 +22,7 @@ indices.optimize <- function (index = "_all", max_num_segments = NULL,
 
   args = prepareArgs(args)
 
-  url = httr::modify_url(url, "path" = path)
+  url = httr::modify_url(client$url, "path" = path)
   res = httr::POST(url)
   httr::stop_for_status(res)
 

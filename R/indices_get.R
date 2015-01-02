@@ -1,9 +1,14 @@
 #' @export
-indices.get <- function (index = "_all", raw = FALSE) {
-  url = getOption("res_url")
+indices.get <- function (client, index = "_all", raw = FALSE) {
+  UseMethod("indices.get", client)
+}
+
+#' @rdname indices.get
+#' @export
+indices.get.elasticsearch <- function (client, index = "_all", raw = FALSE) {
   path = paste(index, collapse = ",")
 
-  url = httr::modify_url(url, "path" = path)
+  url = httr::modify_url(client$url, "path" = path)
   res = httr::GET(url)
   httr::stop_for_status(res)
 

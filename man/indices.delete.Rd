@@ -2,18 +2,25 @@
 \name{indices.delete}
 \alias{indices.delete}
 \alias{indices.delete.elasticsearch}
-\title{Deletes data in an index.}
+\title{indices.delete}
 \usage{
-indices.delete(client, index = "_all", raw = FALSE)
+indices.delete(client, ...)
 
-\method{indices.delete}{elasticsearch}(client, index = "_all", raw = FALSE)
+\method{indices.delete}{elasticsearch}(client, index = "_all",
+  timeout = NULL, master_timeout = NULL, raw = FALSE,
+  validate_params = TRUE)
 }
 \arguments{
-\item{index}{A string representing the index}
+\item{index}{String The name of the index}
 
-\item{timeout}{A string representing the value of the timeout}
+\item{timeout}{Date, Number Explicit operation timeout}
+
+\item{master_timeout}{Date, Number Specify timeout for connection to master}
 }
 \description{
+Delete an index in Elasticsearch
+}
+\details{
 \code{Delete_index} Deletes data in an index.
 }
 \examples{

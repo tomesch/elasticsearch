@@ -1,3 +1,3 @@
 library(testthat)
 
-test_check("res")
+test_check("elasticsearch")

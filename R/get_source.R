@@ -1,40 +1,37 @@
-#'Retrieve source from index
+#' getSource
+#'
+#' Get the source of a document by its index, type and id.
 #'
 #' \code{getSource} retrieves source from index
+#' @param index String The name of the index
+#' @param type String The type of the document; use _all to fetch the first document matching the ID across all types
+#' @param id String The document ID
+#' @param parent String The ID of the parent document
+#' @param source String, String[], Logical True or false to return the _source field or not, or a list of fields to return
+#' @param source_include String, String[], Logical A list of fields to extract and return from the _source field
+#' @param source_exclude String, String[], Logical A list of fields to exclude from the returned _source field
+#' @param realtime Logical Specify whether to perform the operation in realtime or search mode
+#' @param routing String Specific routing value
+#' @param preference String Specify the node or shard the operation should be performed on (default: random)
+#' @param refresh Logical Refresh the shard containing the document before performing the operation
+#' @param version Number Explicit version number for concurrency control
+#' @param versionType String Specific version type
 #'
-#'@param index A string representing the index.
-#'@param type A string representing the type.
-#'@param id A string representing the id
-#'@param fields A string representing the fields.
-#'@param source A boolean representing our choice to return the contents of the _source field or not.
-#'@param realtime A boolean representing if the result should be realtime or not
-#'@param routing A string allowing to control the _routing aspect when indexing data and explicit routing control is required.
-#'@param preference A string that controls a preference of which shard replicas to execute the search request on.
-#'@param refresh A boolean that allows to explicitly refresh one or more index, making all operations performed since the last refresh available for search.
-#'@param version A string representing the return of a version for each search hit.
-#'@param exists A boolean that returns documents that have at least one non-null value in the original field.
-#'@param raw A boolean that indicates if the format of the response should be in json or not.
-#'@param validate.params A boolean indicating the need to validate the passing parameters or not.
-#'@param source_include A string representing the source_include; include parameters that you want to display in the returned source.
-#'@param source_exclude A string representing the source_exclude; filter parameters that you do not want to display in the returned source.
+#'
 #' @export getSource
-getSource <- function (client, index, type = "_all", id, fields = NULL, source = TRUE,
-                 realtime = TRUE, routing = NULL, preference = NULL,
-                 refresh = FALSE, version = NULL, exists = FALSE, raw = FALSE,
-                 validate.params = TRUE, source_include = NULL,
-                 source_exclude = NULL) {
+getSource <- function (client, ...) {
   UseMethod("getSource", client)
 }
 
 #' @rdname getSource
 #' @export
-getSource.elasticsearch <- function (client, index, type = "_all", id, fields = NULL, source = TRUE,
-                       realtime = TRUE, routing = NULL, preference = NULL,
-                       refresh = FALSE, version = NULL, exists = FALSE, raw = FALSE,
-                       validate.params = TRUE, source_include = NULL,
-                       source_exclude = NULL) {
+getSource.elasticsearch <- function (client, index, type = "_all", id, parent = NULL, source = TRUE,
+                                     realtime = TRUE, routing = NULL, preference = "random",
+                                     refresh = FALSE, version = NULL, version_type = NULL, raw = FALSE,
+                                     validate_params = TRUE, source_include = NULL,
+                                     source_exclude = NULL) {
   args = as.list(match.call())
   args[[1]] = NULL
-  args[['get.source']] = TRUE
+  args[['get_source']] = TRUE
   do.call(get, args)
 }

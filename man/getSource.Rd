@@ -2,51 +2,47 @@
 \name{getSource}
 \alias{getSource}
 \alias{getSource.elasticsearch}
-\title{Retrieve source from index}
+\title{getSource}
 \usage{
-getSource(client, index, type = "_all", id, fields = NULL, source = TRUE,
-  realtime = TRUE, routing = NULL, preference = NULL, refresh = FALSE,
-  version = NULL, exists = FALSE, raw = FALSE, validate.params = TRUE,
-  source_include = NULL, source_exclude = NULL)
+getSource(client, ...)
 
 \method{getSource}{elasticsearch}(client, index, type = "_all", id,
-  fields = NULL, source = TRUE, realtime = TRUE, routing = NULL,
-  preference = NULL, refresh = FALSE, version = NULL, exists = FALSE,
-  raw = FALSE, validate.params = TRUE, source_include = NULL,
-  source_exclude = NULL)
+  parent = NULL, source = TRUE, realtime = TRUE, routing = NULL,
+  preference = "random", refresh = FALSE, version = NULL,
+  version_type = NULL, raw = FALSE, validate_params = TRUE,
+  source_include = NULL, source_exclude = NULL)
 }
 \arguments{
-\item{index}{A string representing the index.}
+\item{index}{String The name of the index}
 
-\item{type}{A string representing the type.}
+\item{type}{String The type of the document; use _all to fetch the first document matching the ID across all types}
 
-\item{id}{A string representing the id}
+\item{id}{String The document ID}
 
-\item{fields}{A string representing the fields.}
+\item{parent}{String The ID of the parent document}
 
-\item{source}{A boolean representing our choice to return the contents of the _source field or not.}
+\item{source}{String, String[], Logical True or false to return the _source field or not, or a list of fields to return}
 
-\item{realtime}{A boolean representing if the result should be realtime or not}
+\item{realtime}{Logical Specify whether to perform the operation in realtime or search mode}
 
-\item{routing}{A string allowing to control the _routing aspect when indexing data and explicit routing control is required.}
+\item{routing}{String Specific routing value}
 
-\item{preference}{A string that controls a preference of which shard replicas to execute the search request on.}
+\item{preference}{String Specify the node or shard the operation should be performed on (default: random)}
 
-\item{refresh}{A boolean that allows to explicitly refresh one or more index, making all operations performed since the last refresh available for search.}
+\item{refresh}{Logical Refresh the shard containing the document before performing the operation}
 
-\item{version}{A string representing the return of a version for each search hit.}
+\item{version}{Number Explicit version number for concurrency control}
 
-\item{exists}{A boolean that returns documents that have at least one non-null value in the original field.}
+\item{source_include}{String, String[], Logical A list of fields to extract and return from the _source field}
 
-\item{raw}{A boolean that indicates if the format of the response should be in json or not.}
+\item{source_exclude}{String, String[], Logical A list of fields to exclude from the returned _source field}
 
-\item{validate.params}{A boolean indicating the need to validate the passing parameters or not.}
-
-\item{source_include}{A string representing the source_include; include parameters that you want to display in the returned source.}
-
-\item{source_exclude}{A string representing the source_exclude; filter parameters that you do not want to display in the returned source.}
+\item{versionType}{String Specific version type}
 }
 \description{
+Get the source of a document by its index, type and id.
+}
+\details{
 \code{getSource} retrieves source from index
 }
 

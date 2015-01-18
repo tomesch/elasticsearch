@@ -2,20 +2,41 @@
 \name{count}
 \alias{count}
 \alias{count.elasticsearch}
-\title{Count items that match a query.}
+\title{count}
 \usage{
-count(client, index, type, query)
+count(client, ...)
 
-\method{count}{elasticsearch}(client, index, type, query, raw = FALSE)
+\method{count}{elasticsearch}(client, index, type, body, min_score,
+  preference = "random", routing, expand_wildcards = "open",
+  ignore_unavailable, allow_no_indices, raw = FALSE, validate_params = TRUE)
 }
 \arguments{
-\item{index}{A string representing the index.}
+\item{index}{String, String[] A vector of indices  to restrict the results}
 
-\item{type}{A string representing the type.}
+\item{type}{String, String[] A vector of types to restrict the results}
 
-\item{query}{A string representing the query}
+\item{body}{String The query}
+
+\item{min_score}{Number Include only documents with a specific _score value in the result}
+
+\item{preference}{String Specify the node or shard the operation should be performed on (default: random)}
+
+\item{routing}{String Specific routing value}
+
+\item{expand_wildcards}{String Whether to expand wildcard expression to concrete indices that are open, closed or both}
+
+\item{ignore_unavailable}{Logical Whether specified concrete indices should be ignored when unavailable (missing or closed)}
+
+\item{allow_no_indices}{Logical Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes _all string or when no indices have been specified)}
+
+\item{raw}{A string representing the query}
+
+\item{validate_params}{A string representing the query}
 }
 \description{
+Get the number of documents for the cluster, index, type, or a query.
+}
+\details{
 \code{count} counts items that match a query.
 }
 

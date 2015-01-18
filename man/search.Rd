@@ -2,63 +2,89 @@
 \name{search}
 \alias{search}
 \alias{search.elasticsearch}
-\title{Execute a search query and retrieve results making the query}
+\title{search}
 \usage{
-search(client, index, type, query, from = 0, size = 10, fields = NULL,
-  source = NULL, default_operator = "OR", explain = FALSE,
-  analyzer = NULL, timeout = NULL, source_include = NULL,
-  search_type = "query_then_fetch", source_exclude = NULL,
-  lowercase_expanded_terms = TRUE, analyze_wildcard = FALSE,
-  validate = FALSE, raw = FALSE, validate.params = TRUE)
+search(client, ...)
 
-\method{search}{elasticsearch}(client, index, type, query, from = 0,
-  size = 10, fields = NULL, source = NULL, default_operator = "OR",
-  explain = FALSE, analyzer = NULL, timeout = NULL,
-  source_include = NULL, search_type = "query_then_fetch",
-  source_exclude = NULL, lowercase_expanded_terms = TRUE,
-  analyze_wildcard = FALSE, validate = FALSE, raw = FALSE,
-  validate.params = TRUE)
+\method{search}{elasticsearch}(client, index, type, query,
+  indices_boost = NULL, lenient = NULL, from = 0, size = 10,
+  fields = NULL, source = NULL, default_operator = "OR",
+  explain = FALSE, lowercase_expanded_terms = NULL, preference = "random",
+  analyzer = NULL, analyze_wildcard = FALSE, df = NULL,
+  ignore_unavailable = NULL, timeout = NULL, source_include = NULL,
+  allow_no_indices = FALSE, expand_wildcards = "open", search_type = NULL,
+  source_exclude = NULL, terminate_after = NULL, suggest_field = NULL,
+  suggest_mode = "missing", suggest_size = NULL, suggest_text = NULL,
+  track_scores = NULL, query_cache = NULL, validate = FALSE,
+  raw = FALSE, validate_params = TRUE)
 }
 \arguments{
-\item{index}{A string representing the index.}
+\item{index}{String A comma-separated list of index names to search; use _all or empty string to perform the operation on all indices}
 
-\item{type}{A string representing the type.}
+\item{type}{String A comma-separated list of document types to search; leave empty to perform the operation on all types}
 
-\item{query}{A string representing the query.}
+\item{query}{Json}
 
-\item{from}{A string representing the beginning of the interval we are interested in.}
+\item{indices_boost}{String, String[], Logical Comma-separated list of index boosts}
 
-\item{size}{A string representing the size.}
+\item{lenient}{Logical Specify whether format-based query failures (such as providing text to a numeric field) should be ignored}
 
-\item{fields}{A string representing the fields.}
+\item{from}{Number Starting offset (default: 0)}
 
-\item{source}{A boolean representing our choice to return the contents of the _source field or not.}
+\item{size}{Number Number of hits to return (default: 10)}
 
-\item{default_operator}{A string representing the default operator.}
+\item{fields}{String, String[], Logical A comma-separated list of fields to return as part of a hit}
 
-\item{explain}{A boolean enabling explanation for each hit on how its score was computed.}
+\item{source}{String, String[], Logical True or false to return the _source field or not, or a list of fields to return}
 
-\item{analyzer}{A string that allows to use a document field property as the name of the analyzer that will be used to index the document.}
+\item{default_operator}{String The default operator for query string query (AND or OR)}
 
-\item{timeout}{A string representing the value of the timeout .}
+\item{explain}{Logical Specify whether to return detailed information about score computation as part of a hit}
 
-\item{source_include}{A string representing the source_include; include parameters that you want to display in the returned source.}
+\item{lowercase_expanded_terms}{Logical Specify whether query terms should be lowercased}
 
-\item{search_type}{A string representing the type of the search.}
+\item{preference}{String Specify the node or shard the operation should be performed on (default: random)}
 
-\item{source_exclude}{A string representing the source_exclude; filter parameters that you do not want to display in the returned source.}
+\item{analyzer}{String The analyzer to use for the query string}
 
-\item{lowercase_expanded_terms}{A boolean indicating if the wildcard has lower case characters.}
+\item{analyze_wildcard}{Logical Specify whether wildcard and prefix queries should be analyzed (default: false)}
 
-\item{analyze_wildcard}{A boolean indicating, when true, that an attempt will be made to analyze wildcarded words before searching the term list for matching terms.}
+\item{df}{String The field to use as default where no field prefix is given in the query string}
 
-\item{validate}{A boolean that allows a user to validate a potentially expensive query without executing it.}
+\item{ignore_unavailable}{String Whether specified concrete indices should be ignored when unavailable (missing or closed)}
 
-\item{raw}{A boolean that indicates if the format of the response should be in json or not.}
+\item{timeout}{Number Explicit operation timeout}
 
-\item{validate.params}{A boolean indicating the need to validate the passing parameters or not.}
+\item{source_include}{String, String[], Logical A list of fields to extract and return from the _source field}
+
+\item{allow_no_indices}{Logical Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes _all string or when no indices have been specified)}
+
+\item{expand_wildcards}{String Whether to expand wildcard expression to concrete indices that are open, closed or both.}
+
+\item{search_type}{String Search operation type}
+
+\item{source_exclude}{String, String[], Logical A list of fields to exclude from the returned _source field}
+
+\item{terminate_after}{Number The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.}
+
+\item{suggest_field}{String Specify which field to use for suggestions}
+
+\item{suggest_mode}{String Specify suggest mode}
+
+\item{suggest_size}{Number How many suggestions to return in response}
+
+\item{suggest_text}{String The source text for which the suggestions should be returned}
+
+\item{track_scores}{Logical Whether to calculate and return scores even if they are not used for sorting}
+
+\item{query_cache}{Logical Specify if query cache should be used for this request or not, defaults to index level setting}
+
+\item{routing}{String, String[], Boolean A comma-separated list of specific routing values}
+
+\item{version}{Logical Specify whether to return document version as part of a hit}
 }
 \description{
+Return documents matching a query, aggregations/facets, highlighted snippets, suggestions, and more.
 \code{search} executes a search query and retrieves results making the query
 }
 \examples{

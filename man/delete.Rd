@@ -2,26 +2,42 @@
 \name{delete}
 \alias{delete}
 \alias{delete.elasticsearch}
-\title{Delete a document from an index based on its id}
+\title{delete}
 \usage{
-delete(client, index, type, id, query = NULL, version = NULL,
-  routing = NULL, parent = NULL, replication = "sync", refresh = FALSE,
-  timeout = "1m", consistency = NULL, raw = FALSE,
-  validate.params = TRUE)
+delete(client, ...)
 
 \method{delete}{elasticsearch}(client, index, type, id, query = NULL,
-  version = NULL, routing = NULL, parent = NULL, replication = "sync",
-  refresh = FALSE, timeout = "1m", consistency = NULL, raw = FALSE,
-  validate.params = TRUE)
+  version = NULL, version_type = NULL, routing = NULL, parent = NULL,
+  replication = "sync", refresh = FALSE, timeout = "1m",
+  consistency = NULL, raw = FALSE, validate_params = TRUE)
 }
 \arguments{
-\item{index}{A string representing the index}
+\item{index}{String The name of the index}
 
-\item{type}{A string representing the type}
+\item{type}{String The type of the document}
 
-\item{id}{A string representing the id}
+\item{id}{String The document ID}
+
+\item{version}{Number Explicit version number for concurrency control}
+
+\item{version_type}{String Specific version type}
+
+\item{routing}{String Specific routing value}
+
+\item{parent}{String ID of parent document}
+
+\item{replication}{String Specific replication type}
+
+\item{refresh}{Logical Refresh the index after performing the operation}
+
+\item{timeout}{Date Explicit operation timeout}
+
+\item{consistency}{String Specific write consistency setting for the operation}
 }
 \description{
+Delete a typed JSON document from a specific index based on its id.
+}
+\details{
 \code{delete} deletes a document from an index based on its id.
 }
 \examples{

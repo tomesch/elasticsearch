@@ -1,27 +1,39 @@
-#' Execute a search query and retrieve results making the query
+#' search
 #'
+#' Return documents matching a query, aggregations/facets, highlighted snippets, suggestions, and more.
 #' \code{search} executes a search query and retrieves results making the query
-#'
-#' @param index A string representing the index.
-#' @param type A string representing the type.
-#' @param query A string representing the query.
-#' @param from A string representing the beginning of the interval we are interested in.
-#' @param size A string representing the size.
-#' @param fields A string representing the fields.
-#' @param source A boolean representing our choice to return the contents of the _source field or not.
-#' @param default_operator A string representing the default operator.
-#' @param explain A boolean enabling explanation for each hit on how its score was computed.
-#' @param analyzer A string that allows to use a document field property as the name of the analyzer that will be used to index the document.
-#' @param timeout A string representing the value of the timeout .
-#' @param source_include A string representing the source_include; include parameters that you want to display in the returned source.
-#' @param source_exclude A string representing the source_exclude; filter parameters that you do not want to display in the returned source.
-#' @param search_type A string representing the type of the search.
-#' @param lowercase_expanded_terms A boolean indicating if the wildcard has lower case characters.
-#' @param analyze_wildcard A boolean indicating, when true, that an attempt will be made to analyze wildcarded words before searching the term list for matching terms.
-#' @param validate A boolean that allows a user to validate a potentially expensive query without executing it.
-#' @param raw A boolean that indicates if the format of the response should be in json or not.
-#' @param validate.params A boolean indicating the need to validate the passing parameters or not.
-#'
+#' @param index String A comma-separated list of index names to search; use _all or empty string to perform the operation on all indices
+#' @param type String A comma-separated list of document types to search; leave empty to perform the operation on all types
+#' @param query Json
+#' @param analyzer String The analyzer to use for the query string
+#' @param analyze_wildcard Logical Specify whether wildcard and prefix queries should be analyzed (default: false)
+#' @param default_operator String The default operator for query string query (AND or OR)
+#' @param df String The field to use as default where no field prefix is given in the query string
+#' @param explain Logical Specify whether to return detailed information about score computation as part of a hit
+#' @param fields String, String[], Logical A comma-separated list of fields to return as part of a hit
+#' @param from Number Starting offset (default: 0)
+#' @param ignore_unavailable String Whether specified concrete indices should be ignored when unavailable (missing or closed)
+#' @param allow_no_indices Logical Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes _all string or when no indices have been specified)
+#' @param expand_wildcards String Whether to expand wildcard expression to concrete indices that are open, closed or both.
+#' @param indices_boost String, String[], Logical Comma-separated list of index boosts
+#' @param lenient Logical Specify whether format-based query failures (such as providing text to a numeric field) should be ignored
+#' @param lowercase_expanded_terms Logical Specify whether query terms should be lowercased
+#' @param preference String Specify the node or shard the operation should be performed on (default: random)
+#' @param routing String, String[], Boolean A comma-separated list of specific routing values
+#' @param search_type String Search operation type
+#' @param size Number Number of hits to return (default: 10)
+#' @param source String, String[], Logical True or false to return the _source field or not, or a list of fields to return
+#' @param source_exclude String, String[], Logical A list of fields to exclude from the returned _source field
+#' @param source_include String, String[], Logical A list of fields to extract and return from the _source field
+#' @param terminate_after Number The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
+#' @param suggest_field String Specify which field to use for suggestions
+#' @param suggest_mode String Specify suggest mode
+#' @param suggest_size Number How many suggestions to return in response
+#' @param suggest_text String The source text for which the suggestions should be returned
+#' @param timeout Number Explicit operation timeout
+#' @param track_scores Logical Whether to calculate and return scores even if they are not used for sorting
+#' @param version Logical Specify whether to return document version as part of a hit
+#' @param query_cache Logical Specify if query cache should be used for this request or not, defaults to index level setting
 #' @examples
 #' search("twitter", id="1")
 #' search("twitter", "tweet", "1", 'c("name", "date")')
@@ -30,23 +42,18 @@
 #' \url{http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/search-search.html#search-search}
 #'
 #' @export
-search <- function (client, index, type, query, from = 0, size = 10, fields = NULL,
-                    source = NULL, default_operator = "OR", explain = FALSE,
-                    analyzer = NULL, timeout = NULL, source_include = NULL,
-                    search_type = "query_then_fetch", source_exclude = NULL,
-                    lowercase_expanded_terms = TRUE, analyze_wildcard = FALSE,
-                    validate = FALSE, raw = FALSE, validate.params = TRUE) {
+search <- function (client, ...) {
   UseMethod("search", client)
 }
 
 #' @rdname search
 #' @export
-search.elasticsearch <- function (client, index, type, query, from = 0, size = 10, fields = NULL,
-                    source = NULL, default_operator = "OR", explain = FALSE,
-                    analyzer = NULL, timeout = NULL, source_include = NULL,
-                    search_type = "query_then_fetch", source_exclude = NULL,
-                    lowercase_expanded_terms = TRUE, analyze_wildcard = FALSE,
-                    validate = FALSE, raw = FALSE, validate.params = TRUE) {
+search.elasticsearch <- function (client, index, type, query, indices_boost = NULL, lenient = NULL, from = 0, size = 10, fields = NULL,
+                                  source = NULL, default_operator = "OR", explain = FALSE, lowercase_expanded_terms = NULL, preference = "random",
+                                  analyzer = NULL, analyze_wildcard = FALSE, df = NULL, ignore_unavailable = NULL, timeout = NULL, source_include = NULL,
+                                  allow_no_indices = FALSE, expand_wildcards = "open", search_type = NULL, source_exclude = NULL,
+                                  terminate_after = NULL, suggest_field = NULL, suggest_mode = "missing", suggest_size = NULL, suggest_text = NULL, track_scores = NULL, query_cache = NULL,
+                                  validate = FALSE, raw = FALSE, validate_params = TRUE) {
   # Format path
   path = ""
   if (missing(index) && missing(type)) {
@@ -60,33 +67,12 @@ search.elasticsearch <- function (client, index, type, query, from = 0, size = 1
                  paste(type, collapse = ","), "_search", sep="/")
   }
 
-  if (!is.null(fields)) {
-    fields = paste(fields, collapse = ",")
+  args = as.list(match.call())
+  args = removeNonURLARgs(args)
+  if (validate_params) {
+    validateParams(args)
   }
-  if (!is.null(source_include)) {
-    source_include = paste(source_include, collapse = ",")
-  }
-  if (!is.null(source_exclude)) {
-    source_exclude = paste(source_exclude, collapse = ",")
-  }
-
-  args = list("_source_exclude" = source_exclude,
-              "_source_include" = source_include, fields = fields,
-              "_source" = source, default_operator = default_operator,
-              explain = explain, analyzer = analyzer, timeout = timeout,
-              search_type = search_type,
-              lowercase_expanded_terms = lowercase_expanded_terms,
-              analyze_wildcard = analyze_wildcard, from = from, size = size)
-
-  if (validate.params) {
-    validateArgs(args)
-  }
-
   args = prepareArgs(args)
-
-  if (validate) {
-    print(path)
-  }
 
   url = httr::modify_url(client$url, "path" = path, "query" = args)
 

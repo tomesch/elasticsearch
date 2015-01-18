@@ -2,55 +2,54 @@
 \name{index}
 \alias{index}
 \alias{index.elasticsearch}
-\title{Add or update a document in a specific index}
+\title{index}
 \usage{
-index(client, index, type, id, document, version = NULL,
+index(client, ...)
+
+\method{index}{elasticsearch}(client, index, type, id, body,
+  consistency = NULL, replication = "sync", version = NULL,
   version_type = NULL, op_type = NULL, routing = NULL, parent = NULL,
   timestamp = NULL, ttl = NULL, refresh = FALSE, timeout = "1m",
-  raw = FALSE, validate.params = TRUE)
-
-\method{index}{elasticsearch}(client, index, type, id, document,
-  version = NULL, version_type = NULL, op_type = NULL, routing = NULL,
-  parent = NULL, timestamp = NULL, ttl = NULL, refresh = FALSE,
-  timeout = "1m", raw = FALSE, validate.params = TRUE)
+  raw = FALSE, validate_params = TRUE)
 }
 \arguments{
-\item{index}{A string representing the index}
+\item{index}{String The name of the index}
 
-\item{type}{A string representing the type}
+\item{type}{String The type of the document}
 
-\item{id}{A string representing the id}
+\item{id}{String Document ID}
 
-\item{document}{A string representing the document}
+\item{consistency}{String Explicit write consistency setting for the operation}
 
-\item{version}{A string representing the return of a version for each search hit.}
+\item{replication}{String Specific replication type}
 
-\item{version_type}{A string representing the version type.}
+\item{version}{Number Explicit version number for concurrency control}
 
-\item{op_type}{A string representing the operation type.}
+\item{version_type}{String Specific version type}
 
-\item{routing}{A string allowing to control the _routing aspect when indexing data and explicit routing control is required.}
+\item{routing}{String Specific routing value}
 
-\item{parent}{A string pointing to the parent type this child relates to.}
+\item{parent}{String ID of the parent document}
 
-\item{timestamp}{A string indicating the value of the associated timestamp for this document.}
+\item{timestamp}{String Explicit timestamp for the document}
 
-\item{ttl}{A string representing the time to live.}
+\item{ttl}{Date Expiration time for the document}
 
-\item{refresh}{A boolean that allows to explicitly refresh one or more index, making all operations performed since the last refresh.}
+\item{refresh}{Logical Refresh the index after performing the operation}
 
-\item{timeout}{A string representing the value of the timeout}
+\item{timeout}{Date Explicit operation timeout}
 
-\item{raw}{A boolean that indicates if the format of the response should be in json or not.}
-
-\item{validate.params}{A boolean indicating the need to validate the passing parameters or not.}
+\item{document}{Json}
 }
 \description{
+Stores a typed JSON document in an index, making it searchable. When the id param is not set, a unique id will be auto-generated. When you specify an id either a new document will be created, or an existing document will be updated. To enforce "put-if-absent" behavior set the op_type to "create" or use the create() method.
+}
+\details{
 \code{index} adds or updates a document in a specific index.
 }
 \examples{
 index("twitter", "tweet", 1, '{"test_index": "text_index"}')
-index("twitter", "tweet", document='{"test_index": "text_index"}')
+index("twitter", "tweet", body='{"test_index": "text_index"}')
 }
 \references{
 \url{http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-index_.html}

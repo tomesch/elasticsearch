@@ -1,82 +1,73 @@
-context("Document indexation API")
+context("index API")
 
-connect()
+es = ElasticSearchClient("http://localhost:9200")
 
-test_that("the document is correctly encoded", {
-  res = index("tests", "test1",
-                   document='{"testing": "hard", "list" : [1, 2, 3]}')
-  expect_match(res["created"], "TRUE")
+test_that("a basic indexation without id works", {
+  res = index(es, "test_r_elasticsearch", "test_index", body = '{"hi":"it works"}')
 
-  res2 = index("tests", "test1",
-                    document=list(testing = "hard", list = c(1, 2, 3)))
-  expect_match(res2["created"], "TRUE")
-
-  expect_equal(get("tests", "test1", res["_id"])["_source"],
-               get("tests", "test1", res2["_id"])["_source"])
+  expect_that(res$created, equals(TRUE))
 })
 
-test_that("ids are automaticly created", {
-  res = index("tests", "test1", document='{"testing": "hard"}')
-  expect_match(res["created"], "TRUE")
-  expect_true(nchar(res["_id"]) > 0)
+test_that("a basic indexation with id works", {
+  res = index(es, "test_r_elasticsearch", "test_index", 1, body = '{"hi":"it works"}')
+
+  expect_that(res$created, equals(TRUE))
 })
 
-test_that("version can be set", {
-  res = index("tests", "test1", document='{"testing": "hard"}')
-  expect_match(res["created"], "TRUE")
+test_that("an indexation with consistency parameter works", {
+  res = index(es, "test_r_elasticsearch", "test_index", body = '{"hi":"it works"}', consistency = "one")
 
-  res = index("tests", "test1", res["_id"], document='{"testing": "hard"}',
-                   version = 1)
-  expect_match(res["created"], "FALSE")
-  expect_match(res["_version"], "2")
-
-  expect_error(index("tests", "test1", res["_id"],
-                          document='{"testing": "hard"}', version = 1))
+  expect_that(res$created, equals(TRUE))
+  expect_equal(grep('consistency=one', res$'_url'), 1)
 })
 
-test_that("version type can be set", {
-  res = index("tests", "test1", document='{"testing": "hard"}',
-                   version_type = "external", version = 5)
-  expect_match(res["created"], "TRUE")
-  expect_match(res["_version"], "5")
+test_that("an indexation with replication parameter works", {
+  res = index(es, "test_r_elasticsearch", "test_index", body = '{"hi":"it works"}', replication = "sync")
 
-  res = index("tests", "test1", res["_id"], document='{"testing": "hard"}',
-                   version_type = "external", version = 6)
-  expect_match(res["created"], "FALSE")
-  expect_match(res["_version"], "6")
-
-  res = index("tests", "test1", res["_id"], document='{"testing": "hard"}',
-                   version_type = "external_gte", version = 7)
-  expect_match(res["created"], "FALSE")
-  expect_match(res["_version"], "7")
-
-  res = index("tests", "test1", res["_id"], document='{"testing": "hard"}',
-                   version_type = "external_gte", version = 7)
-  expect_match(res["created"], "FALSE")
-  expect_match(res["_version"], "7")
-
-  res = index("tests", "test1", res["_id"], document='{"testing": "hard"}',
-                   version = 1, version_type = "force")
-  expect_match(res["created"], "FALSE")
-  expect_match(res["_version"], "1")
+  expect_that(res$created, equals(TRUE))
+  expect_equal(grep('replication=sync', res$'_url'), 1)
 })
 
-test_that("operation type can be set", {
-  res = index("tests", "test1", document='{"testing": "hard"}')
-  expect_match(res["created"], "TRUE")
+test_that("an indexation with version parameter works", {
+  res = index(es, "test_r_elasticsearch", "test_index", body = '{"hi":"it works"}', version = 0)
 
-  expect_error(index("tests", "test1", res["_id"],
-                          document='{"testing": "hard"}', op_type="create"))
+  expect_that(res$created, equals(TRUE))
+  expect_equal(grep('version=0', res$'_url'), 1)
 })
 
-test_that("routing can be set", {
-  #TODO
+test_that("an indexation with version_type parameter works", {
+  res = index(es, "test_r_elasticsearch", "test_index", body = '{"hi":"it works"}', version_type = "internal")
+
+  expect_that(res$created, equals(TRUE))
+  expect_equal(grep('version_type=internal', res$'_url'), 1)
 })
 
-test_that("timestamp can be set", {
-  ## TODO
+test_that("an indexation with routing parameter works", {
+  res = index(es, "test_r_elasticsearch", "test_index", body = '{"hi":"it works"}', routing = "test")
+
+  expect_that(res$created, equals(TRUE))
+  expect_equal(grep('routing=test', res$'_url'), 1)
 })
 
-test_that("time to live can be set", {
-  ## need maping
+test_that("an indexation with timeout parameter works", {
+  res = index(es, "test_r_elasticsearch", "test_index", body = '{"hi":"it works"}', timeout = "1m")
+
+  expect_that(res$created, equals(TRUE))
+  expect_equal(grep('timeout=1m', res$'_url'), 1)
 })
+
+test_that("an indexation with refresh parameter works", {
+  res = index(es, "test_r_elasticsearch", "test_index", body = '{"hi":"it works"}', refresh = TRUE)
+
+  expect_that(res$created, equals(TRUE))
+  expect_equal(grep('refresh=1', res$'_url'), 1)
+})
+
+test_that("an indexation with ttl parameter works", {
+  res = index(es, "test_r_elasticsearch", "test_index", body = '{"hi":"it works"}', ttl = "1m")
+
+  expect_that(res$created, equals(TRUE))
+  expect_equal(grep('ttl=1m', res$'_url'), 1)
+})
+
+# Parent

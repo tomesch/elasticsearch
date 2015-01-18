@@ -2,11 +2,29 @@
 \name{indices.close}
 \alias{indices.close}
 \alias{indices.close.elasticsearch}
+\title{indices.close}
 \usage{
-indices.close(client, index = "_all", ignore_unavailable = FALSE,
-  raw = FALSE, validate.params = TRUE)
+indices.close(client, ...)
 
 \method{indices.close}{elasticsearch}(client, index = "_all",
-  ignore_unavailable = FALSE, raw = FALSE, validate.params = TRUE)
+  timeout = NULL, master_timeout = NULL, allow_no_indices = NULL,
+  expand_wildcards = "open", ignore_unavailable = FALSE, raw = FALSE,
+  validate_params = TRUE)
+}
+\arguments{
+\item{index}{String The name of the index}
+
+\item{timeout}{Date, Number Explicit operation timeout}
+
+\item{master_timeout}{Date, Number Specify timeout for connection to master}
+
+\item{allow_no_indices}{Logical Whether to ignore if a wildcard indices expression resolves into no concrete indices. (This includes _all string or when no indices have been specified)}
+
+\item{expand_wildcards}{String Whether to expand wildcard expression to concrete indices that are open, closed or both}
+
+\item{ignore_unavailable}{Logical Whether specified concrete indices should be ignored when unavailable (missing or closed}
+}
+\description{
+Close an index to remove its overhead from the cluster. Closed index is blocked for read/write operations.
 }
 

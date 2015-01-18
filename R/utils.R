@@ -1,5 +1,6 @@
 #' @export
-formatESResult <- function (res, raw) {
+formatESResult <- function (res, raw = FALSE) {
+  url = res$url
   body = httr::content(res, as="text")
   if (body == "") {
     return()
@@ -7,20 +8,60 @@ formatESResult <- function (res, raw) {
   if (raw) {
     body
   } else {
-    jsonlite::fromJSON(body)
+    res = jsonlite::fromJSON(body)
+    res$'_url' = url
+    res
   }
 }
 
 #' @export
 prepareArgs <- function (args) {
-  args = args[!sapply(args, is.null)]
-  rapply(args, function (x) {
-    ifelse(is.logical(x), x * 1, x)
-  }, how="replace")
+  if (!is.null(args) && length(args) > 0) {
+    args = args[!sapply(args, is.null)]
+    rapply(args, function (x) {
+      ifelse(is.logical(x), x * 1, x)
+    }, how="replace")
+  } else {
+    NULL
+  }
 }
 
 #' @export
-validateArgs <- function (args) {
+removeNonURLARgs <- function (args) {
+  args[1] = NULL
+  args$client = NULL
+  args$index = NULL
+  args$type = NULL
+  args$id = NULL
+  args$body = NULL
+  args$validate_params = NULL
+  args$raw = NULL
+  args$exists = NULL
+  args$get_source = NULL
+
+  args$'_source_include' = eval(args$'source_include')
+  args$'_source_exclude' = eval(args$'source_exclude')
+  args[['_source']] = eval(args[['source']])
+
+  args$'source' = NULL
+  args$source_exclude = NULL
+  args$source_include = NULL
+
+  if (!is.null(args$fields)) {
+    args$fields = paste(args$fields, collapse = ",")
+  }
+  if (!is.null(args$'_source_include')) {
+    args$'_source_include' = paste(args$'_source_include', collapse = ",")
+  }
+  if (!is.null(args$'_source_exclude')) {
+    args$'_source_exclude' = paste(args$'_source_exclude', collapse = ",")
+  }
+
+  args
+}
+
+#' @export
+validateParams <- function (args) {
   res = lapply(names(args), function (arg) {
     val = args[[arg]]
     if (!is.null(val)) {

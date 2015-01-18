@@ -1,19 +1,25 @@
-#' Update a document with a script
+#' update
 #'
+#' Update parts of a document
 #' \code{update} updates a document based on a script provided.
 #'
-#' @param index A string representing the index
-#' @param type A string representing the type
-#' @param id A string representing the id
-#' @param body A string representing the body
-#' @param routing A string allowing to control the _routing aspect when indexing data and explicit routing control is required.
-#' @param parent A string pointing to the parent type this child relates to.
-#' @param timeout A string representing the value of the timeout
-#' @param refresh A boolean that allows to explicitly refresh one or more index, making all operations performed since the last refresh.
-#' @param fields A string representing the fields.
-#' @param version A string representing the return of a version for each search hit.
-#' @param validate.params A boolean indicating the need to validate the passing parameters or not.
-#'
+#' @param index
+#' @param type
+#' @param id
+#' @param body Json
+#' @param consistency String Explicit write consistency setting for the operation
+#' @param fields String, String[], Logical A comma-separated list of fields to return in the response
+#' @param lang String The script language (default: groovy)
+#' @param parent String ID of the parent document
+#' @param refresh Logical Refresh the index after performing the operation
+#' @param replication String Specific replication type
+#' @param retry_on_conflict Number Specify how many times should the operation be retried when a conflict occurs (default: 0)
+#' @param routing String Specific routing value
+#' @param timeout Number Explicit operation timeout
+#' @param timestamp Date Explicit timestamp for the document
+#' @param ttl Duration Expiration time for the document
+#' @param version Number Explicit version number for concurrency control
+#' @param version_type String Specific version type
 #' @examples
 #' update("twitter", "tweet", 1)
 #'
@@ -21,36 +27,28 @@
 #' \url{http://www.elasticsearch.org/guide/en/elasticsearch/reference/current/docs-update.html}
 #'
 #' @export
-update <- function (client, index, type, id, body, routing = NULL, parent = NULL,
-                    timeout = "1m", refresh = FALSE, fields = NULL,
-                    version = NULL, validate.params = TRUE, raw = FALSE) {
+update <- function (client, ...) {
   UseMethod("update", client)
 }
 
 #' @rdname update
 #' @export
 update.elasticsearch <- function (client, index, type, id, body, routing = NULL, parent = NULL,
-                    timeout = "1m", refresh = FALSE, fields = NULL,
-                    version = NULL, validate.params = TRUE, raw = FALSE) {
+                                  timeout = "1m", refresh = FALSE, fields = NULL,
+                                  version = NULL, version_type = NULL, validate_params = TRUE, raw = FALSE, consistency = NULL, lang = "groovy", replication = "sync", retry_on_conflict = NULL, timestamp = NULL, ttl = NULL) {
   if (missing(index) || missing(type) || missing(id)) {
     stop()
   } else {
     path = paste(index, type, id, "_update", sep="/")
 
-    if (!is.null(fields)) {
-      fields = paste(fields, collapse = ",")
+    args = as.list(match.call())
+    args = removeNonURLARgs(args)
+    if (validate_params) {
+      validateParams(args)
     }
-    args = list(routing = routing, parent = parent, timeout = timeout,
-                refresh = refresh, fields = fields, version = version)
-
-    if (validate.params) {
-      validateArgs(args)
-    }
-
     args = prepareArgs(args)
 
     url = httr::modify_url(client$url, "path" = path, "query" = args)
-
     res <- httr::POST(url, body=body, encode = "json")
     httr::stop_for_status(res)
 

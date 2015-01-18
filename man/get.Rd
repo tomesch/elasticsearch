@@ -2,52 +2,52 @@
 \name{get}
 \alias{get}
 \alias{get.elasticsearch}
-\title{Get a document from an index based on its id}
+\title{get}
 \usage{
-get(client, index, type = "_all", id, fields = NULL, source = TRUE,
-  source_include = NULL, source_exclude = NULL, realtime = TRUE,
-  routing = NULL, preference = NULL, refresh = FALSE, version = NULL,
-  exists = FALSE, raw = FALSE, validate.params = TRUE,
-  get.source = FALSE)
+get(client, ...)
 
 \method{get}{elasticsearch}(client, index, type = "_all", id, fields = NULL,
-  source = TRUE, source_include = NULL, source_exclude = NULL,
-  realtime = TRUE, routing = NULL, preference = NULL, refresh = FALSE,
-  version = NULL, exists = FALSE, raw = FALSE, validate.params = TRUE,
-  get.source = FALSE)
+  source = TRUE, source_include = NULL, parent = NULL,
+  source_exclude = NULL, realtime = TRUE, routing = NULL,
+  preference = "random", refresh = FALSE, version = NULL,
+  version_type = NULL, exists = FALSE, raw = FALSE,
+  validate_params = TRUE, get_source = FALSE)
 }
 \arguments{
-\item{index}{A string representing the index.}
+\item{client}{}
 
-\item{type}{A string representing the type.}
+\item{index}{String The name of the index}
 
-\item{id}{A string representing the id.}
+\item{type}{String The type of the document (use _all to fetch the first document matching the ID across all types)}
 
-\item{fields}{A string representing the fields.}
+\item{id}{String The document ID}
 
-\item{source}{A boolean representing our choice to return the contents of the _source field or not.}
+\item{fields}{String, String[] A comma-separated list of fields to return in the response}
 
-\item{source_include}{A string representing the source_include; include parameters that you want to display in the returned source.}
+\item{source}{String, String[], Logical True or false to return the _source field or not, or a list of fields to return}
 
-\item{source_exclude}{A string representing the source_exclude; filter parameters that you do not want to display in the returned source.}
+\item{source_include}{String, String[], Logical A list of fields to extract and return from the _source field}
 
-\item{realtime}{A boolean representing if the result should be realtime or not}
+\item{parent}{String The ID of the parent document}
 
-\item{routing}{A string allowing to control the _routing aspect when indexing data and explicit routing control is required.}
+\item{source_exclude}{String, String[], Logical A list of fields to exclude from the returned _source field}
 
-\item{preference}{A string that controls a preference of which shard replicas to execute the search request on.}
+\item{realtime}{Logical Specify whether to perform the operation in realtime or search mode}
 
-\item{refresh}{A boolean that allows to explicitly refresh one or more index, making all operations performed since the last refresh available for search.}
+\item{routing}{String Specific routing value}
 
-\item{version}{A string representing the return of a version for each search hit.}
+\item{preference}{String Specify the node or shard the operation should be performed on (default: random)}
 
-\item{exists}{A boolean that returns documents that have at least one non-null value in the original field.}
+\item{refresh}{Logical Refresh the shard containing the document before performing the operation}
 
-\item{raw}{A boolean that indicates if the format of the response should be in json or not.}
+\item{version}{Number Explicit version number for concurrency control}
 
-\item{validate.params}{A boolean indicating the need to validate the passing parameters or not.}
+\item{version_type}{String Specific version type}
 }
 \description{
+Get a typed JSON document from the index based on its id.
+}
+\details{
 \code{get} searches a document in an index based on its id and returns it.
 }
 \examples{

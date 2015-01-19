@@ -1,4 +1,4 @@
-#elasticsearch
+#elasticsearch.R
 
 ##Installation
 You will need the devtools package in order to install this package

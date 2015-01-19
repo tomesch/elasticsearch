@@ -28,10 +28,10 @@ indices.exists.elasticsearch <- function (client, index, ignore_unavailable = NU
 
   url = httr::modify_url(client$url, "path" = path, "query" = args)
   res = httr::HEAD(url)
-  if (res['status_code'] == 404) {
-    FALSE
+  if (res['status_code'] >= 400) {
+    list(exists = FALSE, url = url)
   } else if (res['status_code'] == 200) {
-    TRUE
+    list(exists = TRUE, '_url' = url)
   }
 }
 

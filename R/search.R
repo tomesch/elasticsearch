@@ -4,7 +4,7 @@
 #' \code{search} executes a search query and retrieves results making the query
 #' @param index String A comma-separated list of index names to search; use _all or empty string to perform the operation on all indices
 #' @param type String A comma-separated list of document types to search; leave empty to perform the operation on all types
-#' @param query Json
+#' @param body Json
 #' @param analyzer String The analyzer to use for the query string
 #' @param analyze_wildcard Logical Specify whether wildcard and prefix queries should be analyzed (default: false)
 #' @param default_operator String The default operator for query string query (AND or OR)
@@ -48,7 +48,7 @@ search <- function (client, ...) {
 
 #' @rdname search
 #' @export
-search.elasticsearch <- function (client, index, type, query, indices_boost = NULL, lenient = NULL, from = 0, size = 10, fields = NULL,
+search.elasticsearch <- function (client, index, type, body, indices_boost = NULL, lenient = NULL, from = 0, size = 10, fields = NULL,
                                   source = NULL, default_operator = "OR", explain = FALSE, lowercase_expanded_terms = NULL, preference = "random",
                                   analyzer = NULL, analyze_wildcard = FALSE, df = NULL, ignore_unavailable = NULL, timeout = NULL, source_include = NULL,
                                   allow_no_indices = FALSE, expand_wildcards = "open", search_type = NULL, source_exclude = NULL,
@@ -77,8 +77,8 @@ search.elasticsearch <- function (client, index, type, query, indices_boost = NU
   url = httr::modify_url(client$url, "path" = path, "query" = args)
 
   # Send HTTP request
-  if (!missing(query)) {
-    res = httr::POST(url, body = query, encode = "json")
+  if (!missing(body)) {
+    res = httr::POST(url, body = body, encode = "json")
   } else {
     res = httr::POST(url)
   }

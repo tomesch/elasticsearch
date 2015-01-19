@@ -6,7 +6,7 @@
 \usage{
 search(client, ...)
 
-\method{search}{elasticsearch}(client, index, type, query,
+\method{search}{elasticsearch}(client, index, type, body,
   indices_boost = NULL, lenient = NULL, from = 0, size = 10,
   fields = NULL, source = NULL, default_operator = "OR",
   explain = FALSE, lowercase_expanded_terms = NULL, preference = "random",
@@ -23,7 +23,7 @@ search(client, ...)
 
 \item{type}{String A comma-separated list of document types to search; leave empty to perform the operation on all types}
 
-\item{query}{Json}
+\item{body}{Json}
 
 \item{indices_boost}{String, String[], Logical Comma-separated list of index boosts}
 

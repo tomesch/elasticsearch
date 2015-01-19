@@ -25,7 +25,7 @@ bulk(es, requests)
 ###CRUD operations
 ````R
 # Index a new document
-index(es, "ucd", "characters", 1, document='{"cp": "9999", "na": "My new character", "age": "23", "blk": "ASCII"}')
+index(es, "ucd", "characters", 1, body='{"cp": "9999", "na": "My new character", "age": "23", "blk": "ASCII"}')
 # Get it
 get(es, "ucd", "characters", 1)
 # Update it
@@ -37,9 +37,9 @@ delete(es, "ucd", "characters", 1)
 ###Search
 ````R
 # Search a character
-search(es, query='{"query": {"match": {"na": "pile of poo"}}}')
+search(es, body='{"query": {"match": {"na": "pile of poo"}}}')
 # Run an aggregation
-res = search(es, query='{"aggs" : {"blocks" : {"terms" : { "field" : "blk", "size": 0}}}}')
+res = search(es, body='{"aggs" : {"blocks" : {"terms" : { "field" : "blk", "size": 0}}}}')
 # And plot it
 barplot(res$aggregations$blocks$buckets$doc_count)
 ````

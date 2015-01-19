@@ -42,6 +42,8 @@ removeNonURLARgs <- function (args) {
   args$'_source_include' = eval(args$'source_include')
   args$'_source_exclude' = eval(args$'source_exclude')
   args[['_source']] = eval(args[['source']])
+  args[['fields']] = eval(args[['fields']])
+  args[['sort']] = eval(args[['sort']])
 
   args$'source' = NULL
   args$source_exclude = NULL
@@ -49,6 +51,9 @@ removeNonURLARgs <- function (args) {
 
   if (!is.null(args$fields)) {
     args$fields = paste(args$fields, collapse = ",")
+  }
+  if (!is.null(args$sort)) {
+    args$sort = paste(args$sort, collapse = ",")
   }
   if (!is.null(args$'_source_include')) {
     args$'_source_include' = paste(args$'_source_include', collapse = ",")

@@ -8,7 +8,6 @@
 #' @param analyzer String The analyzer to use for the query string
 #' @param analyze_wildcard Logical Specify whether wildcard and prefix queries should be analyzed (default: false)
 #' @param default_operator String The default operator for query string query (AND or OR)
-#' @param df String The field to use as default where no field prefix is given in the query string
 #' @param explain Logical Specify whether to return detailed information about score computation as part of a hit
 #' @param fields String, String[], Logical A comma-separated list of fields to return as part of a hit
 #' @param from Number Starting offset (default: 0)
@@ -25,11 +24,7 @@
 #' @param source String, String[], Logical True or false to return the _source field or not, or a list of fields to return
 #' @param source_exclude String, String[], Logical A list of fields to exclude from the returned _source field
 #' @param source_include String, String[], Logical A list of fields to extract and return from the _source field
-#' @param terminate_after Number The maximum number of documents to collect for each shard, upon reaching which the query execution will terminate early.
-#' @param suggest_field String Specify which field to use for suggestions
-#' @param suggest_mode String Specify suggest mode
-#' @param suggest_size Number How many suggestions to return in response
-#' @param suggest_text String The source text for which the suggestions should be returned
+#' @param sort String, String[], Logical A list of <field>:<direction> pairs
 #' @param timeout Number Explicit operation timeout
 #' @param track_scores Logical Whether to calculate and return scores even if they are not used for sorting
 #' @param version Logical Specify whether to return document version as part of a hit
@@ -48,22 +43,21 @@ search <- function (client, ...) {
 
 #' @rdname search
 #' @export
-search.elasticsearch <- function (client, index, type, body, indices_boost = NULL, lenient = NULL, from = 0, size = 10, fields = NULL,
+search.elasticsearch <- function (client, index, type, body, from = 0, size = 10, fields = NULL,
                                   source = NULL, default_operator = "OR", explain = FALSE, lowercase_expanded_terms = NULL, preference = "random",
-                                  analyzer = NULL, analyze_wildcard = FALSE, df = NULL, ignore_unavailable = NULL, timeout = NULL, source_include = NULL,
+                                  analyzer = NULL, analyze_wildcard = FALSE, ignore_unavailable = NULL, timeout = NULL, source_include = NULL,
                                   allow_no_indices = FALSE, expand_wildcards = "open", search_type = NULL, source_exclude = NULL,
-                                  terminate_after = NULL, suggest_field = NULL, suggest_mode = "missing", suggest_size = NULL, suggest_text = NULL, track_scores = NULL, query_cache = NULL,
-                                  validate = FALSE, raw = FALSE, validate_params = TRUE) {
+                                  track_scores = NULL, sort = NULL, query_cache = NULL, raw = FALSE, validate_params = TRUE) {
   # Format path
   path = ""
   if (missing(index) && missing(type)) {
-    path = paste(path, "_search", sep="/")
+    path = paste("_search", sep="/")
   } else if (missing(index)) {
-    path = paste(path, "_all", paste(type, collapse = ","), "_search", sep="/")
+    path = paste("_all", paste(type, collapse = ","), "_search", sep="/")
   } else if (missing(type)) {
-    path = paste(path, paste(index, collapse = ","), "_search", sep="/")
+    path = paste(paste(index, collapse = ","), "_search", sep="/")
   } else {
-    path = paste(path, paste(index, collapse = ","),
+    path = paste(paste(index, collapse = ","),
                  paste(type, collapse = ","), "_search", sep="/")
   }
 
@@ -75,7 +69,6 @@ search.elasticsearch <- function (client, index, type, body, indices_boost = NUL
   args = prepareArgs(args)
 
   url = httr::modify_url(client$url, "path" = path, "query" = args)
-
   # Send HTTP request
   if (!missing(body)) {
     res = httr::POST(url, body = body, encode = "json")

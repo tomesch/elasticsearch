@@ -52,3 +52,45 @@ test_that("an update request with a version_type parameter works", {
   expect_false(is.null(res))
   expect_equal(grep('version_type=internal', res$'_url'), 1)
 })
+
+test_that("an update request with a consistency parameter works", {
+  res = update(es, "test_r_elasticsearch", "test_update", 1, body='{"doc": {"age" : 1.2}}', consistency="one")
+
+  expect_false(is.null(res))
+  expect_equal(grep('consistency=one', res$'_url'), 1)
+})
+
+test_that("an update request with a lang parameter works", {
+  res = update(es, "test_r_elasticsearch", "test_update", 1, body='{"doc": {"age" : 1.2}}', lang="groovy")
+
+  expect_false(is.null(res))
+  expect_equal(grep('lang=groovy', res$'_url'), 1)
+})
+
+test_that("an update request with a replication parameter works", {
+  res = update(es, "test_r_elasticsearch", "test_update", 1, body='{"doc": {"age" : 1.2}}', replication="sync")
+
+  expect_false(is.null(res))
+  expect_equal(grep('replication=sync', res$'_url'), 1)
+})
+
+test_that("an update request with a retry_on_conflict parameter works", {
+  res = update(es, "test_r_elasticsearch", "test_update", 1, body='{"doc": {"age" : 1.2}}', retry_on_conflict=0)
+
+  expect_false(is.null(res))
+  expect_equal(grep('retry_on_conflict=0', res$'_url'), 1)
+})
+
+test_that("an update request with a timestamp parameter works", {
+  res = update(es, "test_r_elasticsearch", "test_update", 1, body='{"doc": {"age" : 1.2}}', timestamp="1")
+
+  expect_false(is.null(res))
+  expect_equal(grep('timestamp=1', res$'_url'), 1)
+})
+
+test_that("an update request with a ttl parameter works", {
+  res = update(es, "test_r_elasticsearch", "test_update", 1, body='{"doc": {"age" : 1.2}}', ttl="1m")
+
+  expect_false(is.null(res))
+  expect_equal(grep('ttl=1m', res$'_url'), 1)
+})

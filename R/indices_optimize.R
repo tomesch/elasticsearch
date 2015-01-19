@@ -9,7 +9,6 @@
 #' @param max_num_segments Number The number of segments the index should be merged into (default: dynamic)
 #' @param only_expunge_deletes Logical Specify whether the operation should only expunge deleted documents
 #' @param wait_for_merge Logical Specify whether the request should block until the merge process is finished (default: true)
-#' @param force Logical Force a merge operation to run, even if there is a single segment in the index (default: false)
 #' @export
 indices.optimize <- function (client, ...) {
   UseMethod("indices.optimize", client)
@@ -19,7 +18,7 @@ indices.optimize <- function (client, ...) {
 #' @export
 indices.optimize.elasticsearch <- function (client, index = "_all", ignore_unavailable = NULL, allow_no_indices = NULL, expand_wildcards = "open", max_num_segments = NULL,
                                             only_expunge_deletes = FALSE, flush = TRUE,
-                                            wait_for_merge = TRUE, force = FALSE, raw = FALSE, validate_params = TRUE) {
+                                            wait_for_merge = TRUE, raw = FALSE, validate_params = TRUE) {
   path = paste(paste(index, collapse = ","), "_optimize", sep = "/")
 
   args = as.list(match.call())

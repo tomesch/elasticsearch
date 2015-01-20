@@ -39,7 +39,7 @@ bulk.elasticsearch <- function (client, body, index, type, consistency = NULL, r
     args = prepareArgs(args)
 
     url = httr::modify_url(client$url, "path" = path, "query" = args)
-    res = httr::POST(url, body=body, encode = "json")
+    res = httr::POST(url, body = body, encode = "json")
     httr::stop_for_status(res)
 
     formatESResult(res, raw)

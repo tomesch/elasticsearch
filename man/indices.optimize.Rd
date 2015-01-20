@@ -10,7 +10,7 @@ indices.optimize(client, ...)
   ignore_unavailable = NULL, allow_no_indices = NULL,
   expand_wildcards = "open", max_num_segments = NULL,
   only_expunge_deletes = FALSE, flush = TRUE, wait_for_merge = TRUE,
-  force = FALSE, raw = FALSE, validate_params = TRUE)
+  raw = FALSE, validate_params = TRUE)
 }
 \arguments{
 \item{index}{String The name of the index}
@@ -28,8 +28,6 @@ indices.optimize(client, ...)
 \item{flush}{Logical Specify whether the index should be flushed after performing the operation (default: true)}
 
 \item{wait_for_merge}{Logical Specify whether the request should block until the merge process is finished (default: true)}
-
-\item{force}{Logical Force a merge operation to run, even if there is a single segment in the index (default: false)}
 }
 \description{
 Explicitly optimize one or more indices.

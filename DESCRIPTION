@@ -1,7 +1,7 @@
 Package: elasticsearch
 Type: Package
 Title: Simple Elasticsearch client for R
-Version: 0.0
+Version: 0.1.0
 Date: 2014-10-20
 Author: Thomas Eschemann, Joris Girardot, Anne Mayer, Claudia Tanase
 Maintainer: Thomas Eschemann <thomas@eschemann.fr>
@@ -10,6 +10,6 @@ URL: https://github.com/Tomesch/res
 Imports:
     httr,
     jsonlite
-License: MIT
+License: Apache License (== 2.0)
 Suggests:
     testthat

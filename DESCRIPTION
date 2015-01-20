@@ -6,7 +6,7 @@ Date: 2014-10-20
 Author: Thomas Eschemann, Joris Girardot, Anne Mayer, Claudia Tanase
 Maintainer: Thomas Eschemann <thomas@eschemann.fr>
 Description: More about what it does (maybe more than one line)
-URL: https://github.com/Tomesch/res
+URL: https://github.com/Tomesch/elasticsearch
 Imports:
     httr,
     jsonlite

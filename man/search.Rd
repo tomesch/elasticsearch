@@ -45,7 +45,7 @@ search(client, ...)
 
 \item{ignore_unavailable}{String Whether specified concrete indices should be ignored when unavailable (missing or closed)}
 
-\item{timeout}{Number Explicit operation timeout}
+\item{timeout}{Duration Explicit operation timeout}
 
 \item{source_include}{String, String[], Logical A list of fields to extract and return from the _source field}
 
@@ -58,6 +58,8 @@ search(client, ...)
 \item{source_exclude}{String, String[], Logical A list of fields to exclude from the returned _source field}
 
 \item{track_scores}{Logical Whether to calculate and return scores even if they are not used for sorting}
+
+\item{scroll}{Duration Specify how long a consistent view of the index should be maintained for scrolled search}
 
 \item{sort}{String, String[], Logical A list of <field>:<direction> pairs}
 

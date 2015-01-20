@@ -19,13 +19,14 @@
 #' @param lowercase_expanded_terms Logical Specify whether query terms should be lowercased
 #' @param preference String Specify the node or shard the operation should be performed on (default: random)
 #' @param routing String, String[], Boolean A comma-separated list of specific routing values
+#' @param scroll Duration Specify how long a consistent view of the index should be maintained for scrolled search
 #' @param search_type String Search operation type
 #' @param size Number Number of hits to return (default: 10)
 #' @param source String, String[], Logical True or false to return the _source field or not, or a list of fields to return
 #' @param source_exclude String, String[], Logical A list of fields to exclude from the returned _source field
 #' @param source_include String, String[], Logical A list of fields to extract and return from the _source field
 #' @param sort String, String[], Logical A list of <field>:<direction> pairs
-#' @param timeout Number Explicit operation timeout
+#' @param timeout Duration Explicit operation timeout
 #' @param track_scores Logical Whether to calculate and return scores even if they are not used for sorting
 #' @param version Logical Specify whether to return document version as part of a hit
 #' @param query_cache Logical Specify if query cache should be used for this request or not, defaults to index level setting

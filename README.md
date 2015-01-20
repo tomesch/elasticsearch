@@ -1,4 +1,21 @@
 #elasticsearch.R
+##Features (WIP)
+###Document APIs
+- [x] Index
+- [x] Get
+- [x] Delete
+- [x] Update
+- [x] Multi-get
+- [x] Bulk
+
+###Search APIs
+- [x] Search
+
+###Indices APIs
+- [x] Create index
+- [x] Delete index
+- [x] Indices Exists
+- [x] Open / Close Index API
 
 ##Installation
 You will need the devtools package in order to install this package
@@ -9,7 +26,7 @@ install_github("tomesch/elasticsearch")
 library(elasticsearch)
 ````
 ##Examples
-For the following series of examples we will be using a simplifed version of the Unicode Character Database. I formated the data so that it can be directly indexed in ElasticSearch with a bulk query. You can download the database [here](https://gist.github.com/Tomesch/dc7e565e81cf74e9d473/download).
+For the following series of examples we will be using a simplifed version of the Unicode Character Database. The data is formated so that it can be directly indexed in ElasticSearch via a bulk query. You can download the database [here](https://gist.github.com/Tomesch/dc7e565e81cf74e9d473/download).
 
 ###Importing the data
 ````R

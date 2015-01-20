@@ -1,4 +1,21 @@
 #elasticsearch.R
+##Features (WIP)
+###Document APIs
+- [x] Index
+- [x] Get
+- [x] Delete
+- [x] Update
+- [x] Multi-get
+- [x] Bulk
+
+###Search APIs
+- [x] Search
+
+###Indices APIs
+- [x] Create index
+- [x] Delete index
+- [x] Indices Exists
+- [x] Open / Close Index API
 
 ##Installation
 You will need the devtools package in order to install this package

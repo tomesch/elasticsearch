@@ -148,6 +148,14 @@ test_that("a search request with a track_scores parameter works", {
   expect_equal(grep('track_scores=1', res$'_url'), 1)
 })
 
+test_that("a search request with a scroll parameter works", {
+  res = search(es, "test_r_elasticsearch", scroll="1m")
+
+  expect_false(is.null(res$hits))
+  expect_equal(grep('scroll=1m', res$'_url'), 1)
+  expect_false(is.null(res$'_scroll_id'))
+})
+
 test_that("a search request with a sort parameter works", {
   res = search(es, "test_r_elasticsearch", sort=c("cp:asc", "age:desc"))
 

@@ -13,8 +13,8 @@ search(client, ...)
   analyzer = NULL, analyze_wildcard = FALSE, ignore_unavailable = NULL,
   timeout = NULL, source_include = NULL, allow_no_indices = FALSE,
   expand_wildcards = "open", search_type = NULL, source_exclude = NULL,
-  track_scores = NULL, sort = NULL, query_cache = NULL, raw = FALSE,
-  validate_params = TRUE)
+  track_scores = NULL, scroll, sort = NULL, query_cache = NULL,
+  raw = FALSE, validate_params = TRUE)
 }
 \arguments{
 \item{index}{String A comma-separated list of index names to search; use _all or empty string to perform the operation on all indices}

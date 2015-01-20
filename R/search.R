@@ -47,7 +47,7 @@ search.elasticsearch <- function (client, index, type, body, from = 0, size = 10
                                   source = NULL, default_operator = "OR", explain = FALSE, lowercase_expanded_terms = NULL, preference = "random",
                                   analyzer = NULL, analyze_wildcard = FALSE, ignore_unavailable = NULL, timeout = NULL, source_include = NULL,
                                   allow_no_indices = FALSE, expand_wildcards = "open", search_type = NULL, source_exclude = NULL,
-                                  track_scores = NULL, sort = NULL, query_cache = NULL, raw = FALSE, validate_params = TRUE) {
+                                  track_scores = NULL, scroll, sort = NULL, query_cache = NULL, raw = FALSE, validate_params = TRUE) {
   # Format path
   path = ""
   if (missing(index) && missing(type)) {

@@ -97,5 +97,5 @@ test_that("a get request with version_type parameter works", {
 test_that("a get request with exists parameter works", {
   res = get(es, "test_r_elasticsearch", "test_get", 1, exists=TRUE)
 
-  expect_true(res)
+  expect_true(res$exists)
 })

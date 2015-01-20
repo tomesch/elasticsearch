@@ -59,10 +59,10 @@ get.elasticsearch <- function (client, index, type = "_all", id, fields = NULL, 
 
   if (exists) {
     res = httr::HEAD(url)
-    if (res['status_code'] == 404) {
-      return(FALSE)
+    if (res['status_code'] >= 400) {
+      return(list(exists = FALSE, '_url' = url))
     } else if (res['status_code'] == 200) {
-      return(TRUE)
+      return(list(exists = TRUE, '_url' = url))
     }
   } else {
     res = httr::GET(url)

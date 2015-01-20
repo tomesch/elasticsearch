@@ -8,11 +8,9 @@
 exists(client, ...)
 
 \method{exists}{elasticsearch}(client, index, type = "_all", id,
-  fields = NULL, source = TRUE, source_include = NULL, parent = NULL,
-  source_exclude = NULL, realtime = TRUE, routing = NULL,
-  preference = "random", refresh = FALSE, version = NULL,
-  version_type = NULL, raw = FALSE, validate_params = TRUE,
-  get.source = FALSE)
+  parent = NULL, realtime = TRUE, routing = NULL, preference = "random",
+  refresh = FALSE, version = NULL, version_type = NULL, raw = FALSE,
+  validate_params = TRUE)
 }
 \arguments{
 \item{index}{String The name of the index}
@@ -21,15 +19,7 @@ exists(client, ...)
 
 \item{id}{String The document ID}
 
-\item{fields}{String, String[] A comma-separated list of fields to return in the response}
-
-\item{source}{String, String[], Logical True or false to return the _source field or not, or a list of fields to return}
-
-\item{source_include}{String, String[], Logical A list of fields to extract and return from the _source field}
-
 \item{parent}{String The ID of the parent document}
-
-\item{source_exclude}{String, String[], Logical A list of fields to exclude from the returned _source field}
 
 \item{realtime}{Logical Specify whether to perform the operation in realtime or search mode}
 

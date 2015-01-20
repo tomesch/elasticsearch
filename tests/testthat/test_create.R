@@ -1,4 +1,4 @@
 context("create API")
 
-es = ElasticSearchClient("http://localhost:9200")
+es = ElasticsearchClient("http://localhost:9200")
 

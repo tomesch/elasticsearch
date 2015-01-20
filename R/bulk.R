@@ -1,7 +1,7 @@
 #' bulk
 #'
 #' Perform many index/delete operations in a single API call
-#' @param client ElasticSearchClient
+#' @param client ElasticsearchClient
 #' @param body Json The request body
 #' @param index String The default index for the operations
 #' @param type String The default type for the operations

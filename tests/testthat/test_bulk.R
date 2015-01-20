@@ -1,6 +1,6 @@
 context("bulk API")
 
-es = ElasticSearchClient("http://localhost:9200")
+es = ElasticsearchClient("http://localhost:9200")
 
 test_that("a basic bulk request works", {
   res = bulk(es, body = '{"index":{"_index":"test_r_elasticsearch","_type":"test_bulk"}}

@@ -1,6 +1,6 @@
 context("index API")
 
-es = ElasticSearchClient("http://localhost:9200")
+es = ElasticsearchClient("http://localhost:9200")
 
 test_that("a basic indexation without id works", {
   res = index(es, "test_r_elasticsearch", "test_index", body = '{"hi":"it works"}')

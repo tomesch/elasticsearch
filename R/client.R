@@ -1,8 +1,8 @@
-#' ElasticSearchClient
+#' ElasticsearchClient
 #'
-#' Create an ElasticSearch client instance
+#' Create an Elasticsearch client instance
 #' @export
-ElasticSearchClient <- function(host = "http://localhost:9200") {
+ElasticsearchClient <- function(host = "http://localhost:9200") {
   url = httr::parse_url(host)
 
   res <- httr::GET(url)

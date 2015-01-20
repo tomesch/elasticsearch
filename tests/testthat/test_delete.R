@@ -1,6 +1,6 @@
 context("delete API")
 
-es = ElasticSearchClient("http://localhost:9200")
+es = ElasticsearchClient("http://localhost:9200")
 
 bulk(es, body = '{"index":{"_index":"test_r_elasticsearch","_type":"test_delete","_id":"1"}}
 {"cp":"0000","na":"","age":"1.1","blk":"ASCII"}

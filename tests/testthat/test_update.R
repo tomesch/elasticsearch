@@ -1,7 +1,7 @@
 #TODO parent
 context("update API")
 
-es = ElasticSearchClient("http://localhost:9200/")
+es = ElasticsearchClient("http://localhost:9200/")
 index(es, "test_r_elasticsearch", "test_update", 1, body = '{"cp":"0000","na":"","age":"1.1","blk":"ASCII"}');
 index(es, "test_r_elasticsearch", "test_update", 2, body = '{"cp":"0000","na":"","age":"1.1","blk":"ASCII"}', routing="tests");
 index(es, "test_r_elasticsearch", "test_update", 3, body = '{"cp":"0000","na":"","age":"1.1","blk":"ASCII"}');

@@ -1,6 +1,6 @@
 context("indices.open API")
 
-es = ElasticSearchClient("http://localhost:9200")
+es = ElasticsearchClient("http://localhost:9200")
 if (!indices.exists(es, "test_r_elasticsearch")$exists) {
   indices.create(es, "test_r_elasticsearch")
   indices.close(es, "test_r_elasticsearch")

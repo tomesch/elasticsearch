@@ -34,7 +34,7 @@ For the following series of examples we will be using a simplifed version of the
 requests = paste(readLines("/Users/tom/ucd.json"), collapse="\n")
 
 # Create the client
-es = ElasticSearchClient("http://localhost:9200")
+es = ElasticsearchClient("http://localhost:9200")
 # Index the data
 bulk(es, requests)
 ````

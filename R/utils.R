@@ -55,6 +55,12 @@ removeNonURLARgs <- function (args) {
   if (!is.null(args$sort)) {
     args$sort = paste(args$sort, collapse = ",")
   }
+  if (!is.null(args$filters)) {
+    args$sort = paste(args$filters, collapse = ",")
+  }
+  if (!is.null(args$char_filters)) {
+    args$sort = paste(args$char_filters, collapse = ",")
+  }
   if (!is.null(args$'_source_include')) {
     args$'_source_include' = paste(args$'_source_include', collapse = ",")
   }

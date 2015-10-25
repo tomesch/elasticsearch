@@ -1,4 +1,7 @@
 #elasticsearch.R
+
+#(This project is no longer maintained, if you would like to take over feel free to send me an email)
+
 ##Features (WIP)
 ###Document APIs
 - [x] Index
